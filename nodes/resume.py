@@ -2,17 +2,18 @@
 nodes/resume.py - 简历制作节点函数
 
 包含一个 LangGraph 节点函数：
-- handle_resume_making: 启动简历制作对话
+- handle_resume_making: 单轮简历制作对话
 """
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import AIMessage
 
-from state import State
-from utils import show_md_file, get_current_time
+from state import State, get_latest_user_text, get_chat_history
+from utils import get_current_time
 from agents.resume_agent import ResumeMaker
 
 
 def handle_resume_making(state: State) -> State:
-    """通过多轮对话生成定制化 AI 工程师简历。"""
+    """单轮简历制作对话：AgentExecutor 根据上下文决定是追问还是生成简历。"""
     system_message = (
         "You are a skilled resume expert with extensive experience in crafting resumes "
         "tailored for tech roles, especially in AI and Generative AI. "
@@ -32,7 +33,13 @@ def handle_resume_making(state: State) -> State:
         ("placeholder", "{agent_scratchpad}"),
     ])
 
+    user_text = get_latest_user_text(state)
+    chat_history = get_chat_history(state)
+
     resume_maker = ResumeMaker(prompt)
-    path = resume_maker.Create_Resume(state["query"])
-    show_md_file(path)
-    return {"response": path}
+    response_text = resume_maker.Create_Resume(user_text, chat_history)
+
+    return {
+        "messages": [AIMessage(content=response_text)],
+        "response": response_text,
+    }

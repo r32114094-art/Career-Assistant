@@ -1,14 +1,13 @@
 """
 agents/job_search_agent.py - 求职搜索 Agent
 
-包含 JobSearch 类，利用 DuckDuckGo 搜索市场职位并整理为 Markdown。
+包含 JobSearch 类，利用搜索工具查找市场职位。
+单轮模式：AgentExecutor 根据上下文决定是追问用户还是执行搜索。
 """
 from langchain_community.utilities import SerpAPIWrapper
 from langchain.agents import Tool, create_tool_calling_agent, AgentExecutor
-from langchain_core.messages import HumanMessage, AIMessage
 
 from config import llm_pro
-from utils import save_file
 
 
 class JobSearch:
@@ -17,7 +16,7 @@ class JobSearch:
     def __init__(self, prompt):
         """
         Args:
-            prompt: ChatPromptTemplate，仅需 {result} 插槽
+            prompt: ChatPromptTemplate，需包含 chat_history / input / agent_scratchpad 占位符
         """
         self.model = llm_pro
         self.prompt = prompt
@@ -37,40 +36,20 @@ class JobSearch:
             handle_parsing_errors=True
         )
 
-    def find_jobs(self, user_input: str) -> str:
-        """搜索职位并整理为 Markdown 文件。
+    def find_jobs(self, user_input: str, chat_history: list = None) -> str:
+        """单轮求职对话/搜索。
+
+        AgentExecutor 将根据上下文决定是追问用户（缺少职位或地点）还是执行搜索。
 
         Args:
-            user_input: 用户查询（含地点、职位等关键词）
+            user_input:   当前用户输入
+            chat_history: 之前的对话历史消息列表
 
         Returns:
-            str: 保存文件的路径
+            str: LLM 的回复文本（可能是追问或搜索结果）
         """
-        chat_history = []
-        current_input = user_input
-        
-        print("\n开启求职要求确认... 输入 'exit' 结束会话。\n")
-        while True:
-            response = self.agent_executor.invoke({
-                "input": current_input,
-                "chat_history": chat_history
-            })
-            
-            ai_msg = response["output"]
-            # To make the console clean since we have verbose=True, we rely on the final output.
-            
-            if "[TASK_DONE]" in ai_msg:
-                content = ai_msg.replace("[TASK_DONE]", "").replace("```markdown", "").replace("```", "").strip()
-                path = save_file(content, "Job_search")
-                print(f"职位信息已保存至: {path}")
-                return path
-            
-            # 走到这里说明还没收集满信息，记录历史并向用户发问
-            chat_history.extend([
-                HumanMessage(content=current_input),
-                AIMessage(content=ai_msg)
-            ])
-            
-            current_input = input("你: ")
-            if current_input.lower() == 'exit':
-                return "已取消搜索。"
+        response = self.agent_executor.invoke({
+            "input": user_input,
+            "chat_history": chat_history or []
+        })
+        return str(response.get("output", ""))

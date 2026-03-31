@@ -4,3 +4,6 @@ langchain-openai>=0.2.0
 duckduckgo_search==6.3.4
 langgraph==0.2.48
 python-dotenv
+langsmith
+langgraph-checkpoint-postgres
+psycopg[binary]

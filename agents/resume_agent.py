@@ -1,18 +1,17 @@
 """
 agents/resume_agent.py - 简历制作 Agent
 
-包含 ResumeMaker 类，通过多轮对话收集用户信息并生成专业简历。
+包含 ResumeMaker 类，通过单次 AgentExecutor 调用处理简历制作的一轮对话。
+多轮信息收集由外层图的 Checkpointer 驱动。
 """
 from langchain_community.utilities import SerpAPIWrapper
 from langchain.agents import Tool, create_tool_calling_agent, AgentExecutor
-from langchain_core.messages import HumanMessage
 
 from config import llm_pro
-from utils import save_file
 
 
 class ResumeMaker:
-    """通过对话循环创建专业简历的 Agent。"""
+    """通过 AgentExecutor 创建专业简历的 Agent（单轮模式）。"""
 
     def __init__(self, prompt):
         """
@@ -37,38 +36,20 @@ class ResumeMaker:
             handle_parsing_errors=True,
         )
 
-    def Create_Resume(self, user_input: str) -> str:
-        """通过多轮对话收集用户信息并生成简历 Markdown 文件。
+    def Create_Resume(self, user_input: str, chat_history: list = None) -> str:
+        """单轮简历制作对话。
+
+        AgentExecutor 将根据上下文决定是追问用户信息，还是生成最终简历。
 
         Args:
-            user_input: 用户初始请求
+            user_input:   当前用户输入
+            chat_history: 之前的对话历史消息列表
 
         Returns:
-            str: 保存文件的路径
+            str: LLM 的回复文本（可能是追问或最终简历内容）
         """
-        chat_history = []
-        response = None
-
-        while True:
-            print("\n开启简历制作会话。输入 'exit' 结束会话。\n")
-            if user_input.lower() == "exit":
-                print("对话结束。再见！")
-                break
-
-            response = self.agent_executor.invoke(
-                {"input": user_input, "chat_history": chat_history}
-            )
-            chat_history.extend([HumanMessage(content=user_input), response["output"]])
-
-            if len(chat_history) > 10:
-                chat_history = chat_history[-10:]
-
-            user_input = input("你: ")
-
-        if response is None:
-            return ""
-
-        content = str(response.get("output")).replace("```markdown", "").strip()
-        path = save_file(content, "Resume")
-        print(f"简历已保存至: {path}")
-        return path
+        response = self.agent_executor.invoke({
+            "input": user_input,
+            "chat_history": chat_history or []
+        })
+        return str(response.get("output", ""))

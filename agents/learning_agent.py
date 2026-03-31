@@ -2,12 +2,11 @@
 agents/learning_agent.py - 学习资源 Agent
 
 包含 LearningResourceAgent 类，负责：
-- TutorialAgent: 基于 DuckDuckGo 搜索生成教程博客
-- QueryBot:      多轮 Q&A 对话会话
+- TutorialAgent: 基于搜索工具生成教程博客（单次执行，AgentExecutor 闭环）
+- QueryBot:      单轮 Q&A 回答（无循环，多轮由图的反复 invoke 驱动）
 """
 from langchain_community.utilities import SerpAPIWrapper
 from langchain.agents import Tool, create_tool_calling_agent, AgentExecutor
-from langchain_core.messages import AIMessage, HumanMessage
 
 from config import llm_pro
 from utils import trim_conversation, save_file
@@ -16,12 +15,12 @@ from utils import trim_conversation, save_file
 class LearningResourceAgent:
     """处理学习资源相关任务的 Agent。"""
 
-    def __init__(self, prompt):
+    def __init__(self, prompt=None):
         """
         Args:
-            prompt: ChatPromptTemplate 或消息列表，用作系统提示
+            prompt: ChatPromptTemplate（TutorialAgent 使用）或 None（QueryBot 不需要）
         """
-        self.model = llm_pro          # 从 config 注入，无需硬编码模型名
+        self.model = llm_pro
         self.prompt = prompt
         search = SerpAPIWrapper()
         self.tools = [
@@ -35,13 +34,15 @@ class LearningResourceAgent:
     def TutorialAgent(self, user_input: str) -> str:
         """生成 GenAI 主题的教程博客，并保存为 Markdown 文件。
 
+        单次执行：AgentExecutor 内部闭环处理搜索与生成，无需外部循环。
+
         Args:
             user_input: 用户查询内容
 
         Returns:
             str: 保存文件的路径
         """
-        agent = create_tool_calling_agent(self.model, self.tools, self.prompt)  #使用LangChain Agent的工具调用能力。创造一个可以调用工具的Agent
+        agent = create_tool_calling_agent(self.model, self.tools, self.prompt)
         agent_executor = AgentExecutor(agent=agent, tools=self.tools, verbose=True)
         response = agent_executor.invoke({"input": user_input})
 
@@ -50,38 +51,17 @@ class LearningResourceAgent:
         print(f"教程已保存至: {path}")
         return path
 
-    def QueryBot(self, user_input: str) -> str:
-        """启动多轮 Q&A 对话会话。
+    def QueryBot(self, messages: list) -> str:
+        """单轮 Q&A 回答：接收完整对话历史（含系统提示），调用 LLM 一次并返回。
 
-        用户输入 'exit' 退出，会话记录保存为 Markdown 文件。
+        多轮对话由外层图的 Checkpointer 驱动，本方法每次只做一轮问答。
 
         Args:
-            user_input: 初始用户问题
+            messages: 完整的消息列表（SystemMessage + 历史 HumanMessage/AIMessage）
 
         Returns:
-            str: 保存文件的路径
+            str: LLM 的回复文本
         """
-        print("\n开启问答会话。输入 'exit' 结束会话。\n")
-        record_QA_session = []
-        record_QA_session.append("用户问题: %s \n" % user_input)
-        self.prompt.append(HumanMessage(content=user_input))
-
-        while True:
-            self.prompt = trim_conversation(self.prompt)
-            response = self.model.invoke(self.prompt)
-            record_QA_session.append("\n专家回复: %s \n" % response.content)
-            self.prompt.append(AIMessage(content=response.content))
-
-            print("*" * 50 + "人工智能助手" + "*" * 50)
-            print("\n专家助手回复:", response.content)
-
-            print("*" * 50 + "用户" + "*" * 50)
-            user_input = input("\n你的问题: ")
-            record_QA_session.append("\n用户问题: %s \n" % user_input)
-            self.prompt.append(HumanMessage(content=user_input))
-
-            if user_input.lower() == "exit":
-                print("聊天会话已结束。")
-                path = save_file("".join(record_QA_session), "Q&A_Doubt_Session")
-                print(f"问答记录已保存至: {path}")
-                return path
+        trimmed = trim_conversation(messages)
+        response = self.model.invoke(trimmed)
+        return response.content
