@@ -34,7 +34,7 @@ def ask_query_bot(state: State) -> State:
 
 
 def tutorial_agent(state: State) -> State:
-    """生成 GenAI 主题的教程博客并保存。"""
+    """生成 GenAI 主题的教程并保存。"""
     system_message = (
         "You are a knowledgeable assistant specializing as a Senior Generative AI Developer "
         "with extensive experience in both development and tutoring. "
@@ -45,6 +45,14 @@ def tutorial_agent(state: State) -> State:
         "and fully functional code examples. "
         "Provide resource reference links at the end of each tutorial for further learning."
     )
+    #“你是一位知识渊博的助理，专业从事高级生成式人工智能开发”
+    #“在开发和辅导方面都拥有丰富的经验。”
+    #“此外，你是一位经验丰富的博主，专门创作关于生成式人工智能的教程。”
+    #“你的任务是用Markdown文件编写高质量的教程博客，并附上代码示例。”
+    #“根据用户的需求。”
+    #“确保教程包含清晰的解释、结构良好的Python代码和注释。”
+    #“以及功能完整的代码示例。”
+    #“在每个教程的末尾提供资源参考链接，以便进一步学习。”
     system_message += f"\n\n[重要环境变量：当前物理时间为 {get_current_time()}。你在编写教程和搜集技术标准时，若有明确的时效性，请以当下的时间为准进行检索。]"
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_message),

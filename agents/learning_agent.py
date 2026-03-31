@@ -41,7 +41,7 @@ class LearningResourceAgent:
         Returns:
             str: 保存文件的路径
         """
-        agent = create_tool_calling_agent(self.model, self.tools, self.prompt)
+        agent = create_tool_calling_agent(self.model, self.tools, self.prompt)  #使用LangChain Agent的工具调用能力。创造一个可以调用工具的Agent
         agent_executor = AgentExecutor(agent=agent, tools=self.tools, verbose=True)
         response = agent_executor.invoke({"input": user_input})
 
