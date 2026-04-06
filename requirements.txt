@@ -7,3 +7,8 @@ python-dotenv
 langsmith
 langgraph-checkpoint-postgres
 psycopg[binary]
+
+# ── Web 部署 ──
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+websockets>=13.0
