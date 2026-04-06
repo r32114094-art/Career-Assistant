@@ -1,0 +1,121 @@
+id,query,context,expected_main,predicted_main,main_correct,expected_sub,predicted_sub,sub_correct,latency_ms
+1,What are the basics of generative AI?,False,1,1,True,question,question,True,3227.5
+2,Explain how transformers work in NLP,False,1,1,True,question,question,True,1793.2
+3,What is the difference between GPT and BERT?,False,1,1,True,question,question,True,1527.1
+4,How does fine-tuning work for large language models?,False,1,1,True,question,question,True,1503.9
+5,什么是RAG？检索增强生成是怎么工作的？,False,1,1,True,question,question,True,2007.8
+6,Can you explain prompt engineering techniques?,False,1,1,True,question,question,True,1217.2
+7,What are embeddings and how are they used in AI?,False,1,1,True,question,question,True,1369.6
+8,生成式AI和判别式AI的区别是什么？,False,1,1,True,question,question,True,1231.1
+9,How to create a tutorial on LangChain agents?,False,1,1,True,tutorial,tutorial,True,1194.8
+10,Write a blog post about prompt engineering best practices,False,1,1,True,tutorial,tutorial,True,1450.1
+11,帮我写一篇关于向量数据库的教程,False,1,1,True,tutorial,tutorial,True,1506.5
+12,Create a step-by-step guide on building RAG pipelines,False,1,1,True,tutorial,tutorial,True,1180.6
+13,I need a tutorial on fine-tuning LLMs with LoRA,False,1,1,True,tutorial,tutorial,True,1737.2
+14,Write documentation about how to use OpenAI API,False,1,1,True,tutorial,tutorial,True,1210.6
+15,帮我写一个关于LangGraph状态机的博客,False,1,1,True,tutorial,tutorial,True,1738.7
+16,Generate a comprehensive guide on transformer architecture,False,1,1,True,tutorial,tutorial,True,1691.1
+17,Please help me create a resume for an AI engineer position,False,2,2,True,,,,1419.2
+18,Can you review my resume and suggest improvements?,False,2,2,True,,,,1476.8
+19,帮我制作一份机器学习工程师的简历,False,2,1,False,,,,1474.0
+20,I want to update my CV for a data scientist role,False,2,2,True,,,,1485.4
+21,How should I format my resume for tech companies?,False,2,2,True,,,,1182.8
+22,我的简历需要突出哪些AI相关的技能？,False,2,2,True,,,,1768.9
+23,Help me write a professional summary for my resume,False,2,2,True,,,,1977.3
+24,What skills should I highlight on my AI resume?,False,2,2,True,,,,1461.9
+25,帮我把简历改成适合投递Google的版本,False,2,2,True,,,,1313.8
+26,Make me a resume that emphasizes my deep learning experience,False,2,2,True,,,,1618.5
+27,Can you tailor my resume for a generative AI startup?,False,2,2,True,,,,1808.4
+28,简历上项目经历怎么写才能打动面试官？,False,2,2,True,,,,1536.6
+29,What topics should I prepare for an AI interview?,False,3,3,True,question,question,True,1729.6
+30,面试中常考的深度学习问题有哪些？,False,3,3,True,question,question,True,1311.8
+31,What are common machine learning interview questions?,False,3,3,True,question,question,True,1787.4
+32,How do I prepare for a system design interview at a tech com,False,3,3,True,question,question,True,1935.6
+33,Tell me the most frequently asked NLP interview questions,False,3,3,True,question,question,True,1617.3
+34,AI面试一般会问什么技术问题？,False,3,1,False,question,,,1182.7
+35,What should I study for a generative AI engineer interview?,False,3,1,False,question,,,1173.0
+36,帮我整理一下大模型方向的面试高频题,False,3,1,False,question,,,1807.8
+37,Can you conduct a mock interview with me?,False,3,3,True,mock,mock,True,1570.2
+38,帮我模拟一次AI工程师面试,False,3,3,True,mock,mock,True,1650.9
+39,I want to practice a technical interview for ML role,False,3,3,True,mock,mock,True,1393.8
+40,Let's do a mock behavioral interview,False,3,3,True,mock,mock,True,1683.4
+41,模拟面试我，问我关于transformer的问题,False,3,1,False,mock,,,1751.2
+42,Practice interview me as if you're a Google recruiter,False,3,3,True,mock,mock,True,1639.4
+43,能不能像面试官一样考我几道算法题？,False,3,3,True,mock,mock,True,2218.0
+44,Start a mock interview on deep learning fundamentals,False,3,3,True,mock,mock,True,1803.4
+45,Search for AI engineer jobs in San Francisco,False,4,4,True,,,,1491.2
+46,帮我搜索北京的大模型工程师岗位,False,4,4,True,,,,1837.3
+47,Find remote machine learning jobs,False,4,4,True,,,,1292.9
+48,Are there any openings for NLP engineers in New York?,False,4,4,True,,,,1895.5
+49,帮我找一些深圳的AI产品经理职位,False,4,4,True,,,,1510.3
+50,Search for generative AI researcher positions at top compani,False,4,4,True,,,,1539.1
+51,I'm looking for data scientist jobs in London,False,4,4,True,,,,1274.0
+52,有没有远程的AI工程师岗位？,False,4,4,True,,,,1540.1
+53,Find me internship opportunities in artificial intelligence,False,4,4,True,,,,1433.6
+54,搜索上海的LLM方向工作机会,False,4,4,True,,,,1235.6
+55,What companies are hiring for prompt engineers?,False,4,4,True,,,,1795.9
+56,帮我搜索杭州的算法工程师岗位,False,4,4,True,,,,1495.3
+57,今天天气怎么样？,False,5,5,True,,,,1268.5
+58,How do I cook spaghetti carbonara?,False,5,5,True,,,,1272.8
+59,帮我写一首情人节的诗,False,5,5,True,,,,1281.3
+60,What is the capital of France?,False,5,5,True,,,,1439.4
+61,Tell me a joke,False,5,5,True,,,,1502.1
+62,推荐几部好看的电影,False,5,5,True,,,,1485.9
+63,How to fix a leaky faucet?,False,5,5,True,,,,1735.6
+64,你觉得今年股市走势如何？,False,5,5,True,,,,1576.6
+65,What time is it in Tokyo?,False,5,5,True,,,,1225.7
+66,帮我翻译一下这段法语,False,5,5,True,,,,1408.5
+67,What's the best smartphone to buy in 2025?,False,5,5,True,,,,1644.2
+68,讲个鬼故事,False,5,5,True,,,,1296.1
+69,I want to learn about attention mechanisms in detail,False,1,1,True,question,question,True,1666.6
+70,帮我准备一下简历，我是应届生,False,2,2,True,,,,1251.4
+71,面试的时候怎么自我介绍比较好？,False,3,3,True,question,question,True,1581.3
+72,I want to know what companies are using LangChain,False,4,4,True,,,,1427.8
+73,Help me understand RLHF in large language models,False,1,1,True,question,question,True,1319.6
+74,How do I negotiate salary for an AI role?,False,3,3,True,question,question,True,1556.5
+75,写一篇关于多模态AI的入门文章,False,1,1,True,tutorial,tutorial,True,1333.7
+76,Can you help me with a cover letter?,False,2,2,True,,,,1419.4
+77,帮我找工作，我想做AI方向,False,4,4,True,,,,1604.8
+78,What's the difference between AI and machine learning?,False,1,1,True,question,question,True,1673.2
+79,模拟面试一下，考考我PyTorch的知识,False,3,3,True,mock,mock,True,1409.6
+80,帮我润色一下工作经历的描述,False,2,2,True,,,,1362.8
+81,How to learn AI? Also can you help me find AI jobs?,False,1,1,True,question,question,True,1465.0
+82,我想学AI，顺便帮我改改简历,False,1,1,True,question,question,True,1277.9
+83,"Tell me about GANs. By the way, are there GAN-related jobs?",False,1,1,True,question,question,True,1817.5
+84,面试经验分享一下？哦不，还是先教我LangChain吧,False,1,1,True,question,question,True,1576.0
+85,Just chatting. What do you think about the future of AI?,False,1,1,True,question,question,True,1489.7
+86,AI会不会取代程序员？,False,1,1,True,question,question,True,1692.8
+87,"I want to improve my portfolio, not resume, for AI roles",False,2,2,True,,,,1385.7
+88,Should I include a GitHub link on my resume?,False,2,2,True,,,,1587.9
+89,面试前的心理准备怎么做？,False,3,3,True,question,question,True,1308.1
+90,What should I wear to a tech interview?,False,3,3,True,question,question,True,1490.2
+91,帮我搜一搜有没有AI实习岗位,False,4,4,True,,,,1333.0
+92,Where can I find freelance AI projects?,False,4,4,True,,,,1195.3
+93,明天下不下雨？顺便说一下transformer原理,False,1,5,False,question,,,1209.0
+94,你是谁？你能做什么？,False,5,5,True,,,,1297.4
+95,What programming language is best for AI?,False,1,1,True,question,question,True,1278.9
+96,帮我优化LinkedIn个人简介,False,2,2,True,,,,1830.2
+97,How important is a Master's degree for AI jobs?,False,3,1,False,question,,,1413.4
+98,Search for AI jobs that don't require a PhD,False,4,4,True,,,,1602.5
+99,给我讲个笑话吧，我面试前很紧张,False,5,5,True,,,,1581.6
+100,Can you play a game with me?,False,5,5,True,,,,1260.2
+101,Write me a Python hello world program,False,5,5,True,,,,1242.3
+102,帮我算一下1+1等于几,False,5,5,True,,,,1618.9
+103,能再详细讲讲吗？,True,1,1,True,question,question,True,1489.9
+104,好的，那帮我写一篇教程吧,True,1,1,True,tutorial,tutorial,True,1217.7
+105,还有别的建议吗？,True,2,2,True,,,,1285.5
+106,再来一个问题,True,3,3,True,question,question,True,1402.5
+107,这些岗位有远程的吗？,True,4,4,True,,,,1449.4
+108,继续,True,3,3,True,mock,question,False,1773.2
+109,换一个话题吧，帮我做简历,True,2,2,True,,,,1109.7
+110,好的，那就这样吧,True,4,4,True,,,,1297.3
+111,"I see, can you go deeper on that?",True,1,1,True,question,question,True,1429.4
+112,"Thanks, now help me find related jobs",True,4,4,True,,,,1719.0
+113,改一下项目描述的部分,True,2,2,True,,,,1670.4
+114,Next question please,True,3,3,True,mock,question,False,1405.3
+115,再考我一道,True,3,3,True,mock,question,False,1527.7
+116,算了，不找了，教我学AI吧,True,1,1,True,question,question,True,1945.7
+117,嗯嗯,True,2,2,True,,,,1454.7
+118,Let me try another approach,True,1,1,True,tutorial,question,False,1209.6
+119,Do you have any tips?,True,3,3,True,question,question,True,1128.6
+120,也帮我看看有没有类似的岗位,True,4,4,True,,,,1799.2

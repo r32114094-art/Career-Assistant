@@ -29,17 +29,24 @@ _executor = ThreadPoolExecutor(max_workers=8)
 
 # ── 节点中文名映射（用于显示进度） ─────────────────────────
 _NODE_LABELS = {
-    "categorize":                  "正在理解你的问题...",
-    "handle_learning_resource":    "正在匹配学习资源...",
-    "handle_interview_preparation":"正在准备面试资料...",
-    "handle_resume_making":        "正在生成简历内容...",
-    "job_search":                  "正在搜索岗位信息...",
-    "job_search_review":           "等待审核搜索结果...",
-    "mock_interview":              "正在模拟面试场景...",
-    "interview_topics_questions":  "正在整理面试题目...",
-    "tutorial_agent":              "正在生成教程内容...",
-    "ask_query_bot":               "正在查询答案...",
+    "categorize":                  "⚙️ 思考中，正在理解您的意图...",
+    "handle_learning_resource":    "⚙️ 思考中，正在分析学习需求...",
+    "handle_interview_preparation":"⚙️ 思考中，正在分析面试需求...",
+    "handle_resume_making":        "✍️ 正在生成简历内容...",
+    "job_search":                  "🔍 正在进行网页搜索...",
+    "job_search_review":           "✅ 搜索完成，等待您审核...",
+    "mock_interview":              "🎯 正在模拟面试场景...",
+    "interview_topics_questions":  "📝 正在整理面试题目...",
+    "tutorial_agent":              "📚 正在生成教程内容...",
+    "ask_query_bot":               "💡 正在查询答案...",
     "out_of_scope":                "正在处理...",
+}
+
+# ── 内部路由节点（输出不应显示给用户）───────────────
+_INTERNAL_NODES = {
+    "categorize",
+    "handle_learning_resource",
+    "handle_interview_preparation",
 }
 
 # ── 应用生命周期 ────────────────────────────────────────────
@@ -90,7 +97,9 @@ def _stream_graph(workflow, inputs, config, queue: asyncio.Queue, loop):
                     loop,
                 )
 
-                # 从 update 中提取 AI 消息
+                # 从 update 中提取 AI 消息（跳过内部路由节点）
+                if node_name in _INTERNAL_NODES:
+                    continue
                 messages = update.get("messages", [])
                 for msg in messages:
                     if isinstance(msg, AIMessage) and msg.content:
@@ -129,7 +138,10 @@ def _stream_graph_tokens(workflow, inputs, config, queue: asyncio.Queue, loop):
                         loop,
                     )
 
-                # 流式 token
+                # 流式 token（跳过内部路由节点的输出，如分类数字 "1"、"Category: Question"）
+                if node_name in _INTERNAL_NODES:
+                    continue
+
                 if isinstance(msg_chunk, AIMessageChunk) and msg_chunk.content:
                     asyncio.run_coroutine_threadsafe(
                         queue.put(("token", msg_chunk.content)),
