@@ -1,0 +1,121 @@
+id,query,context,expected_main,predicted_main,main_correct,parse_success,confidence,needs_clarification,expected_sub,predicted_sub,sub_correct,latency_ms,reason
+1,What are the basics of generative AI?,False,1,1,True,True,0.95,False,question,question,True,4372.1,Query asks for foundational knowledge about a core AI/ML topic.
+2,Explain how transformers work in NLP,False,1,1,True,True,0.95,False,question,question,True,3505.2,Query is a direct request for an educational explanation of a core AI/ML concept (transformers in NLP).
+3,What is the difference between GPT and BERT?,False,1,1,True,True,0.95,False,question,question,True,3150.9,"Query is a technical question about AI/ML model architectures, which falls under educational content about AI."
+4,How does fine-tuning work for large language models?,False,1,1,True,True,0.95,False,question,question,True,3875.0,"Query is a technical question about the process of fine-tuning LLMs, which is a core AI/ML educational topic."
+5,什么是RAG？检索增强生成是怎么工作的？,False,1,1,True,True,0.95,False,question,question,True,4153.1,"Query asks for an explanation of RAG (Retrieval-Augmented Generation), which is a core AI/ML concept, fitting the 'learning' category for educational content about AI."
+6,Can you explain prompt engineering techniques?,False,1,1,True,True,0.95,False,question,question,True,3144.4,Query is a direct request for educational content about an AI/ML technique (prompt engineering).
+7,What are embeddings and how are they used in AI?,False,1,1,True,True,0.95,False,question,question,True,3555.3,"Query asks for an explanation of a core AI/ML concept (embeddings) and its application, which is educational content about AI."
+8,生成式AI和判别式AI的区别是什么？,False,1,1,True,True,0.95,False,question,question,True,3562.2,"Query is a direct question about the difference between two core AI concepts (generative vs. discriminative AI), which falls under AI/ML educational content."
+9,How to create a tutorial on LangChain agents?,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3389.8,Query is about creating educational content (a tutorial) on an AI/ML framework (LangChain agents).
+10,Write a blog post about prompt engineering best practices,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3360.6,Request to write an educational blog post about AI/ML techniques (prompt engineering) falls under AI learning content.
+11,帮我写一篇关于向量数据库的教程,False,1,1,True,True,0.95,False,tutorial,tutorial,True,4127.7,"Request to write a tutorial about vector databases, which is educational content about an AI/ML technology."
+12,Create a step-by-step guide on building RAG pipelines,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3808.4,"Query is a request for a tutorial/guide on building a specific AI/ML system (RAG pipelines), which is educational content about AI."
+13,I need a tutorial on fine-tuning LLMs with LoRA,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3135.0,"Query explicitly requests a tutorial on fine-tuning LLMs, which is a core AI/ML learning topic."
+14,Write documentation about how to use OpenAI API,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3348.9,"Query is a request to create educational/instructional content about an AI/ML tool (OpenAI API), which falls under the 'learning' category for AI/ML tutorials and guides."
+15,帮我写一个关于LangGraph状态机的博客,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3267.0,"Query is a request to write a blog about LangGraph state machines, which is educational content about an AI/ML framework."
+16,Generate a comprehensive guide on transformer architecture,False,1,1,True,True,0.95,False,tutorial,tutorial,True,3202.5,Query is a direct request for educational content about a core AI/ML architecture.
+17,Please help me create a resume for an AI engineer position,False,2,2,True,True,0.95,False,,,,3072.9,User explicitly requests help creating a resume for a specific job role (AI engineer).
+18,Can you review my resume and suggest improvements?,False,2,2,True,True,0.95,False,,,,3064.6,User directly asks for resume review and improvements.
+19,帮我制作一份机器学习工程师的简历,False,2,2,True,True,0.95,False,,,,2988.7,Query explicitly requests help creating a resume for a machine learning engineer position.
+20,I want to update my CV for a data scientist role,False,2,2,True,True,0.95,False,,,,3179.5,"Query is about updating a CV for a specific job role, which falls under resume creation and improvement."
+21,How should I format my resume for tech companies?,False,2,2,True,True,0.95,False,,,,3174.8,Query is specifically about formatting a resume for tech companies.
+22,我的简历需要突出哪些AI相关的技能？,False,2,2,True,True,0.95,False,,,,3349.5,Query is about improving a resume by highlighting AI-related skills.
+23,Help me write a professional summary for my resume,False,2,2,True,True,0.95,False,,,,2919.4,Query is a direct request for help writing a resume component (professional summary).
+24,What skills should I highlight on my AI resume?,False,2,2,True,True,0.95,False,,,,3482.3,Query directly asks about highlighting skills on a resume specifically for an AI role.
+25,帮我把简历改成适合投递Google的版本,False,2,2,True,True,0.95,False,,,,3364.3,"User is asking for help modifying their resume specifically for an application to Google, which falls under resume improvement and tailoring."
+26,Make me a resume that emphasizes my deep learning experience,False,2,2,True,True,0.95,False,,,,3214.9,Direct request to create a resume focusing on a specific AI skill (deep learning).
+27,Can you tailor my resume for a generative AI startup?,False,2,2,True,True,0.95,False,,,,2804.0,Query explicitly requests tailoring a resume for a specific AI job type.
+28,简历上项目经历怎么写才能打动面试官？,False,2,2,True,True,0.95,False,,,,3326.2,"Query specifically asks how to write project experience on a resume to impress interviewers, which is directly about resume content improvement."
+29,What topics should I prepare for an AI interview?,False,3,3,True,True,0.95,False,question,question,True,3065.8,"Query explicitly asks for preparation topics for an AI interview, which directly falls under interview-related career advice."
+30,面试中常考的深度学习问题有哪些？,False,3,3,True,True,0.95,False,question,question,True,3077.6,"Query explicitly asks about common deep learning questions in interviews, which directly falls under interview preparation and career advice."
+31,What are common machine learning interview questions?,False,3,3,True,True,0.95,False,question,question,True,2955.0,"Query directly asks about interview questions for machine learning, which falls under interview preparation."
+32,How do I prepare for a system design interview at a tech com,False,3,3,True,True,0.95,False,question,question,True,3179.4,"Query explicitly asks about preparing for a system design interview at a tech company, which directly falls under interview preparation."
+33,Tell me the most frequently asked NLP interview questions,False,3,3,True,True,0.95,False,question,question,True,3137.9,"Query explicitly asks for 'interview questions' in the context of NLP, which is a technical interview topic."
+34,AI面试一般会问什么技术问题？,False,3,3,True,True,0.95,False,question,question,True,2773.1,"Query explicitly asks about technical questions in AI interviews, which directly falls under interview preparation and advice."
+35,What should I study for a generative AI engineer interview?,False,3,3,True,True,0.95,False,question,question,True,2972.8,Query explicitly asks for study topics for a specific type of job interview.
+36,帮我整理一下大模型方向的面试高频题,False,3,3,True,True,0.95,False,question,question,True,3049.8,Query explicitly asks for organizing high-frequency interview questions in the field of large language models.
+37,Can you conduct a mock interview with me?,False,3,3,True,True,0.95,False,mock,mock,True,2613.8,Query explicitly requests a mock interview.
+38,帮我模拟一次AI工程师面试,False,3,3,True,True,0.95,False,mock,mock,True,3196.4,"Query explicitly requests a mock interview for an AI engineer position, which directly matches the 'interview' category."
+39,I want to practice a technical interview for ML role,False,3,3,True,True,0.95,False,mock,mock,True,2983.6,"Query explicitly mentions practicing a technical interview for an ML role, which directly falls under interview preparation."
+40,Let's do a mock behavioral interview,False,3,3,True,True,0.95,False,mock,mock,True,2919.5,Query explicitly requests a 'mock behavioral interview'.
+41,模拟面试我，问我关于transformer的问题,False,3,3,True,True,0.95,False,mock,mock,True,3197.3,"Query explicitly requests a mock interview ('模拟面试我') and asks for questions about transformers, which is a core AI/ML topic."
+42,Practice interview me as if you're a Google recruiter,False,3,3,True,True,0.95,False,mock,mock,True,2906.7,"Query explicitly requests a practice interview, mimicking a recruiter scenario."
+43,能不能像面试官一样考我几道算法题？,False,3,3,True,True,0.95,False,mock,mock,True,2978.6,Query explicitly asks for mock interview questions ('考我几道算法题') in the style of an interviewer.
+44,Start a mock interview on deep learning fundamentals,False,3,3,True,True,0.95,False,mock,mock,True,2924.8,Query explicitly requests to 'start a mock interview' on a specific topic.
+45,Search for AI engineer jobs in San Francisco,False,4,4,True,True,0.95,False,,,,2960.0,Query is a direct request to search for AI engineer job openings in a specific location.
+46,帮我搜索北京的大模型工程师岗位,False,4,4,True,True,0.95,False,,,,3242.4,Query explicitly requests help searching for a specific AI/ML job position (大模型工程师) in a specific location (北京).
+47,Find remote machine learning jobs,False,4,4,True,True,0.95,False,,,,3019.4,Query is about searching for specific job openings (remote machine learning jobs).
+48,Are there any openings for NLP engineers in New York?,False,4,4,True,True,0.95,False,,,,3144.3,Query directly asks about job openings for a specific AI role (NLP engineer) in a specific location.
+49,帮我找一些深圳的AI产品经理职位,False,4,4,True,True,0.95,False,,,,3315.5,User is asking for help finding specific job openings (AI Product Manager positions in Shenzhen).
+50,Search for generative AI researcher positions at top compani,False,4,4,True,True,0.95,False,,,,3009.4,Query is a direct request to search for specific AI-related job positions.
+51,I'm looking for data scientist jobs in London,False,4,4,True,True,0.95,False,,,,3064.9,User is directly searching for a specific type of job (data scientist) in a specific location (London).
+52,有没有远程的AI工程师岗位？,False,4,4,True,True,0.95,False,,,,2947.0,"Query is specifically asking about the availability of remote AI engineer job positions, which falls under job search."
+53,Find me internship opportunities in artificial intelligence,False,4,4,True,True,0.95,False,,,,3212.7,Query is a direct request to search for AI-related job/internship openings.
+54,搜索上海的LLM方向工作机会,False,4,4,True,True,0.95,False,,,,3093.4,Query is about searching for LLM-related job openings in a specific location (Shanghai).
+55,What companies are hiring for prompt engineers?,False,4,4,True,True,0.95,False,,,,3341.9,Query directly asks about companies hiring for a specific AI/ML role (prompt engineer).
+56,帮我搜索杭州的算法工程师岗位,False,4,4,True,True,0.95,False,,,,3155.2,Query explicitly requests searching for algorithm engineer positions in a specific location (Hangzhou).
+57,今天天气怎么样？,False,5,5,True,True,0.95,False,,,,2929.1,"Query is about weather, which is completely unrelated to AI careers."
+58,How do I cook spaghetti carbonara?,False,5,5,True,True,0.95,False,,,,3124.9,"Query is about cooking a specific dish, completely unrelated to AI careers."
+59,帮我写一首情人节的诗,False,5,5,True,True,0.95,False,,,,3580.4,"Query is a request to write a Valentine's Day poem, which is unrelated to AI careers, resumes, interviews, or job search."
+60,What is the capital of France?,False,5,5,True,True,0.95,False,,,,3041.4,Query is a general geography question unrelated to AI careers.
+61,Tell me a joke,False,5,5,True,True,0.95,False,,,,3287.7,"Query is a request for a joke, which is unrelated to AI careers, resumes, interviews, or job search."
+62,推荐几部好看的电影,False,5,5,True,True,0.95,False,,,,2963.5,"Query is about movie recommendations, which is unrelated to AI careers, resumes, interviews, or job search."
+63,How to fix a leaky faucet?,False,5,5,True,True,0.95,False,,,,2892.0,"Query is about home plumbing repair, completely unrelated to AI careers or the defined categories."
+64,你觉得今年股市走势如何？,False,5,5,True,True,0.95,False,,,,3854.3,"Query is about stock market trends, unrelated to AI careers, resumes, interviews, or job search."
+65,What time is it in Tokyo?,False,5,5,True,True,0.95,False,,,,3706.6,"Query is about time zone and current time, which is unrelated to AI careers, resumes, interviews, or job search."
+66,帮我翻译一下这段法语,False,5,5,True,True,0.95,False,,,,3472.7,"Query is a request for French translation, which is unrelated to AI careers, resumes, interviews, or job search."
+67,What's the best smartphone to buy in 2025?,False,5,5,True,True,0.95,False,,,,3369.0,"Query is about consumer electronics purchasing advice, completely unrelated to AI careers, resumes, interviews, or job search."
+68,讲个鬼故事,False,5,5,True,True,0.95,False,,,,3232.5,"Query is a request for a ghost story, which is completely unrelated to AI careers, resumes, interviews, or job search."
+69,I want to learn about attention mechanisms in detail,False,1,1,True,True,0.95,False,question,question,True,2889.4,Query is a direct request for educational content about a core AI/ML concept (attention mechanisms).
+70,帮我准备一下简历，我是应届生,False,2,2,True,True,0.95,False,,,,2805.3,Query explicitly asks for help preparing a resume for a new graduate.
+71,面试的时候怎么自我介绍比较好？,False,3,3,True,True,0.95,False,question,question,True,3019.4,"Query directly asks for advice on how to introduce oneself during an interview, which falls under interview preparation and tips."
+72,I want to know what companies are using LangChain,False,4,4,True,True,0.85,False,,,,3365.6,"User is asking about specific companies that use a technology (LangChain), which is a request for information about potential employers or the job market."
+73,Help me understand RLHF in large language models,False,1,1,True,True,0.95,False,question,question,True,3126.8,Query is a direct request for educational explanation of an AI/ML concept (RLHF).
+74,How do I negotiate salary for an AI role?,False,3,3,True,True,0.9,False,question,question,True,2989.9,Salary negotiation is a key part of the interview and job offer process for a specific AI role.
+75,写一篇关于多模态AI的入门文章,False,1,1,True,True,0.95,False,tutorial,question,False,3131.2,"Query is a request to write an introductory article about multimodal AI, which is a specific topic within AI/ML education."
+76,Can you help me with a cover letter?,False,2,2,True,True,0.9,False,,,,2781.6,Cover letter assistance is directly related to resume/CV preparation and job application materials.
+77,帮我找工作，我想做AI方向,False,4,4,True,True,0.95,False,,,,2752.1,User explicitly asks for help finding a job in the AI field.
+78,What's the difference between AI and machine learning?,False,1,1,True,True,0.95,False,question,question,True,2904.7,"Query is a direct question about the distinction between AI and ML, which is educational content about AI."
+79,模拟面试一下，考考我PyTorch的知识,False,3,3,True,True,0.95,False,mock,mock,True,3858.6,"Query explicitly requests a mock interview and a test of PyTorch knowledge, using keywords '模拟面试' (mock interview) and '考考我' (test me)."
+80,帮我润色一下工作经历的描述,False,2,2,True,True,0.95,False,,,,4268.5,"Query directly requests polishing/improving the description of work experience, which is a core resume-related task."
+81,How to learn AI? Also can you help me find AI jobs?,False,1,1,True,True,0.9,False,question,question,True,3696.6,"Primary request is about learning AI, which falls under 'learning'; job search is a secondary request."
+82,我想学AI，顺便帮我改改简历,False,1,2,False,True,0.9,False,question,,,4260.9,Query contains both 'learn AI' (learning) and 'help me revise my resume' (resume). Primary request is to revise the resume.
+83,"Tell me about GANs. By the way, are there GAN-related jobs?",False,1,1,True,True,0.9,False,question,question,True,3773.7,"Primary request is for an explanation of GANs (AI/ML topic), which is educational content. The secondary mention of jobs is not the main focus."
+84,面试经验分享一下？哦不，还是先教我LangChain吧,False,1,1,True,True,0.9,False,question,question,True,3788.9,"User explicitly corrected from 'interview experience' to 'teach me LangChain', which is an AI/ML framework tutorial request."
+85,Just chatting. What do you think about the future of AI?,False,1,1,True,True,0.95,False,question,question,True,3493.1,"Query is a general, philosophical discussion about the future of AI, which falls under AI/ML learning context."
+86,AI会不会取代程序员？,False,1,1,True,True,0.95,False,question,question,True,4174.1,"The query discusses the impact of AI on programming careers, which is a philosophical/educational topic about AI's role and future, fitting the 'learning' category for AI/ML in a general or speculative context."
+87,"I want to improve my portfolio, not resume, for AI roles",False,2,2,True,True,0.9,False,,,,4373.6,"Query is about improving a portfolio for AI roles, which is directly related to career application materials and falls under the 'resume' category's scope of creating or improving application assets."
+88,Should I include a GitHub link on my resume?,False,2,2,True,True,0.95,False,,,,2999.6,Query is about content and presentation of a resume.
+89,面试前的心理准备怎么做？,False,3,3,True,True,0.95,False,question,question,True,4268.2,"Query explicitly mentions '面试前' (before interview) and asks about psychological preparation, which falls under interview preparation and career advice."
+90,What should I wear to a tech interview?,False,3,3,True,True,0.95,False,question,question,True,3497.7,"Query directly asks for advice on attire for a tech interview, which falls under interview preparation and career advice."
+91,帮我搜一搜有没有AI实习岗位,False,4,4,True,True,0.95,False,,,,3241.0,"Query explicitly asks to search for AI internship positions, which falls under job search activities."
+92,Where can I find freelance AI projects?,False,4,4,True,True,0.9,False,,,,3201.3,Query is about searching for specific job opportunities (freelance AI projects).
+93,明天下不下雨？顺便说一下transformer原理,False,1,5,False,True,0.9,False,question,,,3242.5,"Primary query is about weather, which is unrelated to AI careers. The mention of transformer is secondary."
+94,你是谁？你能做什么？,False,5,5,True,True,0.9,False,,,,3603.5,"Query is a general self-introduction question about the assistant's identity and capabilities, unrelated to AI careers, resumes, interviews, or job search."
+95,What programming language is best for AI?,False,1,1,True,True,0.95,False,question,question,True,3472.6,Query is a general educational question about AI/ML tools and programming.
+96,帮我优化LinkedIn个人简介,False,2,2,True,True,0.9,False,,,,3685.8,"Query is about optimizing a LinkedIn profile, which is a professional document similar to a resume/CV."
+97,How important is a Master's degree for AI jobs?,False,3,1,False,True,0.95,False,question,,,4017.5,"Query is about educational requirements and qualifications for AI careers, which falls under AI/ML learning and career guidance context."
+98,Search for AI jobs that don't require a PhD,False,4,4,True,True,0.95,False,,,,3727.8,Query explicitly asks to search for AI job openings with a specific qualification requirement.
+99,给我讲个笑话吧，我面试前很紧张,False,5,3,False,True,0.9,False,,,,3460.5,"User mentions being nervous before an interview and requests a joke, which is related to interview preparation and stress relief."
+100,Can you play a game with me?,False,5,5,True,True,0.95,False,,,,3494.2,"Query is about playing a game, which is unrelated to AI careers, resumes, interviews, or job search."
+101,Write me a Python hello world program,False,5,5,True,True,0.95,False,,,,3931.3,"Request is for a basic Python programming tutorial, which is general computer science education, not specifically about AI/ML careers, resumes, interviews, or job search."
+102,帮我算一下1+1等于几,False,5,5,True,True,0.95,False,,,,3822.0,"Query is a simple arithmetic calculation, completely unrelated to AI careers or any of the specified categories."
+103,能再详细讲讲吗？,True,1,1,True,True,0.95,False,question,question,True,3838.0,"User is asking for a more detailed explanation of RAG (Retrieval-Augmented Generation), which is an AI/ML topic, following a previous learning-focused exchange."
+104,好的，那帮我写一篇教程吧,True,1,1,True,True,0.95,False,tutorial,tutorial,True,3341.3,用户请求撰写关于LangChain的教程，属于AI/ML教育内容
+105,还有别的建议吗？,True,2,2,True,True,0.95,False,,,,3644.2,"User is asking for additional suggestions on improving their resume, following the previous resume-related context."
+106,再来一个问题,True,3,3,True,True,0.95,False,question,question,True,3939.0,"User's query '再来一个问题' (another question) is a follow-up to the previous context about AI interview questions, indicating a request for more interview-related content."
+107,这些岗位有远程的吗？,True,4,4,True,True,0.95,False,,,,4262.3,"User is asking about remote work options for previously searched AI engineer positions, which is a direct follow-up to the job search context."
+108,继续,True,3,3,True,True,0.95,False,mock,question,False,4003.9,"User said '继续' (continue) in direct response to a mock interview prompt, continuing the interview simulation."
+109,换一个话题吧，帮我做简历,True,2,2,True,True,0.95,False,,,,3537.1,用户明确要求更换话题并请求帮助制作简历，属于简历创建类请求。
+110,好的，那就这样吧,True,4,4,True,True,0.9,False,,,,4252.2,"The user's query '好的，那就这样吧' is a short follow-up to the previous context about searching for AI jobs in Shenzhen, so the primary intent remains job_search."
+111,"I see, can you go deeper on that?",True,1,1,True,True,0.95,False,question,question,True,3723.6,Follow-up request to go deeper on an AI/ML topic (attention mechanism).
+112,"Thanks, now help me find related jobs",True,4,4,True,True,0.9,False,,,,3601.6,User explicitly asks for help finding jobs related to the previously discussed topic (prompt engineering).
+113,改一下项目描述的部分,True,2,2,True,True,0.95,False,,,,3831.8,"User is asking to modify the project description section of a resume, which is a direct follow-up to the previous resume creation request."
+114,Next question please,True,3,3,True,True,0.95,False,mock,question,False,3353.8,"User is continuing a mock interview session, directly following the assistant's previous interview question."
+115,再考我一道,True,3,3,True,True,0.95,False,mock,question,False,3762.6,"User is asking for another test/question in the context of a mock interview, following the previous '模拟面试' and '考我' pattern."
+116,算了，不找了，教我学AI吧,True,1,1,True,True,0.95,False,question,question,True,3590.1,"User explicitly states 'teach me AI' after abandoning job search, which is a direct request for educational content about AI/ML."
+117,嗯嗯,True,2,2,True,True,0.95,False,,,,3284.3,"User is responding to a resume draft with affirmation, continuing the resume creation conversation."
+118,Let me try another approach,True,1,1,True,True,0.9,False,tutorial,question,False,3074.4,"Follow-up to a previous BERT tutorial request, indicating continued interest in AI/ML educational content."
+119,Do you have any tips?,True,3,3,True,True,0.95,False,question,question,True,3142.6,User directly asks for tips following a conversation about an interview at OpenAI.
+120,也帮我看看有没有类似的岗位,True,4,4,True,True,0.9,False,,,,3788.4,"User mentions '找工作' (job search) and asks for help finding similar job positions, which directly relates to searching for job openings."

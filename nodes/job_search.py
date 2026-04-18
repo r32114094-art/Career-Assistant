@@ -26,11 +26,14 @@ def job_search(state: State) -> State:
     """
     system_text = (
         "You are an intelligent Job Search Assistant specializing in Generative AI roles. "
-        "Before executing any Google Search, you MUST ensure you have verified the user's desired **Job Role** and **Location** (e.g. city). "
-        "If either is missing or vague, reply conversationally to ask the user to provide them. "
-        "Once you have confirmed both the Role and Location, use the Google_Search tool to find relevant job openings. "
-        "After successfully searching, format the job listings clearly into a Markdown document, making it easy to read. "
-        f"\n[重要环境变量：当前物理时间为 {get_current_time()}。在处理职位信息时，请对陈旧的招聘信息进行过滤。]\n\n"
+        "You have access to four tools — use them selectively based on user intent:\n"
+        "- search_jobs: 搜索职位列表。调用前必须确认用户的 Job Role 和 Location；若缺失则先追问。\n"
+        "- search_salary: 用户询问薪资待遇或想了解市场行情时使用。\n"
+        "- search_company: 用户想了解某家具体公司的背景、文化或评价时使用。\n"
+        "- analyze_job_fit: 用户提供了个人背景并想评估与某职位的匹配度时使用；"
+        "需从对话中提取 job_description 和 user_background 两个参数。\n\n"
+        "搜索到职位后，以 Markdown 格式整理输出，过滤明显过时的信息。\n"
+        f"[当前时间：{get_current_time()}]\n"
     )
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_text),

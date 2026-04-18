@@ -1,0 +1,33 @@
+
+============================================================
+  EVALUATION RESULTS (Structured Routing)
+============================================================
+  Total samples:          120
+  Main accuracy:          116/120 = 96.7%
+  Sub accuracy:           52/57 = 91.2%
+  Avg latency:            3374 ms
+  P95 latency:            4261 ms
+  Errors:                 0
+
+  --- New Metrics ---
+  Parse success rate:     120/120 = 100.0%
+  Low confidence rate:    0/120 = 0.0%  (threshold=0.65)
+  Clarify triggered rate: 0/120 = 0.0%
+
+  Category         Prec  Recall     F1   TP   FP   FN  AvgConf
+  ----------------------------------------------------------
+  Learning        96.9%   93.9%  95.4%   31    1    2     0.94
+  Resume          95.7%  100.0%  97.8%   22    1    0     0.94
+  Interview       96.3%   96.3%  96.3%   26    1    1     0.95
+  JobSearch      100.0%  100.0% 100.0%   21    0    0     0.94
+  OutOfScope      94.1%   94.1%  94.1%   16    1    1     0.94
+============================================================
+
+  Context-dependent accuracy:  100.0% (18 samples)
+  No-context accuracy:         96.1% (102 samples)
+
+  === Misclassified Cases (4 total) ===
+  ID=82  expect=1 got=2  conf=0.90  ctx=False  query=我想学AI，顺便帮我改改简历
+  ID=93  expect=1 got=5  conf=0.90  ctx=False  query=明天下不下雨？顺便说一下transformer原理
+  ID=97  expect=3 got=1  conf=0.95  ctx=False  query=How important is a Master's degree for AI jobs?
+  ID=99  expect=5 got=3  conf=0.90  ctx=False  query=给我讲个笑话吧，我面试前很紧张

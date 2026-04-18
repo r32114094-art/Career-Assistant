@@ -4,9 +4,28 @@ state.py - 状态定义模块
 使用 TypedDict + LangGraph 的 add_messages Reducer 定义工作流中共享的状态结构。
 messages 字段通过 Reducer 自动将新消息追加合并到历史中，是多轮对话的核心支撑。
 """
-from typing import TypedDict, Annotated
+from typing import TypedDict, Annotated, Optional
 from langchain_core.messages import HumanMessage
 from langgraph.graph.message import add_messages
+
+
+class RoutingDecision(TypedDict):
+    """分类节点输出的结构化路由决策。
+
+    Attributes:
+        main_intent: 主分类枚举值 learning|resume|interview|job_search|out_of_scope
+        sub_intent:  子分类枚举值 question|tutorial|mock|null（由子分类节点填写）
+        confidence:  模型自报置信度 0.0~1.0
+        needs_clarification: 是否需要向用户澄清意图
+        clarify_question: 澄清问题文本，needs_clarification=True 时必填
+        reason:      路由原因，用于日志与误差分桶
+    """
+    main_intent: str
+    sub_intent: str
+    confidence: float
+    needs_clarification: bool
+    clarify_question: Optional[str]
+    reason: str
 
 
 class State(TypedDict):
@@ -14,7 +33,9 @@ class State(TypedDict):
 
     Attributes:
         messages: 完整的对话消息列表，使用 add_messages Reducer 自动合并新旧消息
-        category: LLM 分类后的类别标签（路由使用）
+        category: LLM 分类后的类别标签（过渡期双写保留，后续可移除）
+        routing_decision: 结构化路由决策对象，取代 category 成为路由依据
+        clarify_count: 已向用户发出澄清问题的轮次，上限 2 次防止无限追问
         response: 最终响应的文件路径或内容
         pending_job_results: 求职搜索完成后的原始 Markdown 文本，
                              暂存供 job_search_review 节点做 HITL 审核用，
@@ -22,6 +43,8 @@ class State(TypedDict):
     """
     messages: Annotated[list, add_messages]
     category: str
+    routing_decision: RoutingDecision
+    clarify_count: int
     response: str
     pending_job_results: str
 

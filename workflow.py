@@ -18,6 +18,7 @@ from nodes import (
     categorize,
     handle_learning_resource,
     handle_interview_preparation,
+    clarify,
     ask_query_bot,
     tutorial_agent,
     interview_topics_questions,
@@ -49,6 +50,7 @@ def build_workflow():
 
     # ── 添加节点 ──────────────────────────────────────────
     workflow.add_node("categorize", categorize)
+    workflow.add_node("clarify", clarify)
     workflow.add_node("handle_learning_resource", handle_learning_resource)
     workflow.add_node("handle_resume_making", handle_resume_making)
     workflow.add_node("handle_interview_preparation", handle_interview_preparation)
@@ -68,6 +70,7 @@ def build_workflow():
         "categorize",
         route_query,
         {
+            "clarify": "clarify",
             "handle_learning_resource": "handle_learning_resource",
             "handle_resume_making": "handle_resume_making",
             "handle_interview_preparation": "handle_interview_preparation",
@@ -112,6 +115,7 @@ def build_workflow():
     workflow.add_edge("mock_interview", END)
     workflow.add_edge("ask_query_bot", END)
     workflow.add_edge("tutorial_agent", END)
+    workflow.add_edge("clarify", END)
     workflow.add_edge("out_of_scope", END)
 
     # ── 挂载 PostgreSQL 持久化记忆并编译 ────────────────────

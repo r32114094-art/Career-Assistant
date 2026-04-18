@@ -147,5 +147,64 @@
         "required": ["question"]
       }
     }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search_salary",
+      "description": "查询特定职位在指定城市的薪资范围和市场行情。用户询问薪资待遇或想了解市场水位时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "目标职位名称，如'AI工程师'、'算法工程师'"
+          },
+          "location": {
+            "type": "string",
+            "description": "工作城市，如'上海'、'北京'、'深圳'"
+          }
+        },
+        "required": ["role", "location"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search_company",
+      "description": "搜索公司背景、企业文化和员工评价。用户想了解某家具体公司信息时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "description": "公司名称，如'字节跳动'、'百度'、'Anthropic'"
+          }
+        },
+        "required": ["company_name"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "analyze_job_fit",
+      "description": "根据用户背景和职位描述分析匹配度与技能差距。用户提供个人背景且想评估与某职位匹配度时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job_description": {
+            "type": "string",
+            "description": "职位描述或 JD 要求内容"
+          },
+          "user_background": {
+            "type": "string",
+            "description": "用户的技能、经历等背景信息，从对话历史中提取"
+          }
+        },
+        "required": ["job_description", "user_background"]
+      }
+    }
   }
 ]
