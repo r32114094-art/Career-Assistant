@@ -1,0 +1,151 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "search_jobs",
+      "description": "搜索特定地区和角色的 AI/GenAI 相关职位信息。需要用户提供职位名称和工作地点后才能调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "目标职位名称，如'AI工程师'、'NLP算法工程师'、'LLM应用开发'"
+          },
+          "location": {
+            "type": "string",
+            "description": "工作地点，如'上海'、'北京'、'remote'"
+          },
+          "job_type": {
+            "type": "string",
+            "enum": ["full-time", "part-time", "remote", "intern"],
+            "description": "工作类型，可选"
+          }
+        },
+        "required": ["role", "location"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "generate_resume",
+      "description": "根据用户提供的个人信息生成或优化 AI 领域的专业简历。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "target_role": {
+            "type": "string",
+            "description": "目标求职职位"
+          },
+          "skills": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "技能列表，如 ['Python', 'PyTorch', 'LangChain']"
+          },
+          "experience_years": {
+            "type": "integer",
+            "description": "工作/实习年限"
+          },
+          "education": {
+            "type": "string",
+            "description": "最高学历及专业，如'硕士-计算机科学'"
+          }
+        },
+        "required": ["target_role"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_interview_questions",
+      "description": "获取特定 AI 技术方向的面试题目，支持指定难度和数量。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "技术方向，如'LLM'、'RAG'、'Agent'、'Transformer'、'PyTorch'"
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": ["junior", "mid", "senior"],
+            "description": "难度等级"
+          },
+          "count": {
+            "type": "integer",
+            "description": "题目数量，默认 5",
+            "default": 5
+          }
+        },
+        "required": ["topic"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "start_mock_interview",
+      "description": "启动 AI 领域的模拟面试会话，进行实时问答互动。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "模拟面试的目标职位"
+          },
+          "focus_areas": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "重点考察方向，如['深度学习', 'RAG', '系统设计']"
+          }
+        },
+        "required": ["role"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "generate_tutorial",
+      "description": "生成 AI/GenAI 技术主题的教程文档，包含代码示例和参考链接。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "教程主题"
+          },
+          "level": {
+            "type": "string",
+            "enum": ["beginner", "intermediate", "advanced"],
+            "description": "目标读者水平"
+          },
+          "include_code": {
+            "type": "boolean",
+            "description": "是否包含可运行的代码示例",
+            "default": true
+          }
+        },
+        "required": ["topic"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_ai_question",
+      "description": "回答用户关于 AI、机器学习、生成式 AI 领域的技术问题。仅用于需要深度技术解答的场景。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "用户的技术问题"
+          }
+        },
+        "required": ["question"]
+      }
+    }
+  }
+]

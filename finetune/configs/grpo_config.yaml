@@ -1,0 +1,47 @@
+# GRPO 训练配置
+model:
+  name: "checkpoints/dpo_qwen25_3b"   # 加载 DPO checkpoint
+  ref_model: "checkpoints/sft_qwen25_3b"  # 参考模型（计算 KL 散度）
+  dtype: "bfloat16"
+  max_seq_length: 4096
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  quantization: "4bit"
+
+data:
+  prompts_path: "data/grpo/prompts.jsonl"   # 只需 prompt + ground truth
+  format: "grpo"
+
+grpo:
+  group_size: 8           # 每个 prompt 生成 8 个候选
+  temperature: 0.7        # 生成温度（保证多样性）
+  kl_penalty: 0.04        # KL 惩罚系数
+  max_new_tokens: 256     # 生成最大长度
+  reward_function: "eval/reward_function.py:grpo_reward_fn"
+
+training:
+  output_dir: "checkpoints/grpo_qwen25_3b"
+  epochs: 2
+  batch_size: 1           # GRPO 内存占用大
+  gradient_accumulation_steps: 16
+  learning_rate: 1.0e-5   # GRPO 更保守
+  lr_scheduler: "cosine"
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  bf16: true
+  logging_steps: 5
+  save_steps: 50
+  save_total_limit: 2
+
+seed: 42

@@ -1,0 +1,15 @@
+# ── 本地环境（数据生成 + 评估） ──
+openai>=1.0.0
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# ── AutoDL 训练环境 ──
+# pip install unsloth          # Unsloth (GPU 加速 LoRA)
+# pip install trl>=0.14.0      # TRL (SFTTrainer, DPOTrainer, GRPOTrainer)
+# pip install transformers>=4.46.0
+# pip install datasets>=3.0.0
+# pip install torch>=2.4.0
+# pip install peft>=0.13.0
+# pip install bitsandbytes>=0.44.0
+# pip install accelerate>=1.0.0
+# pip install numpy

@@ -1,0 +1,53 @@
+# SFT 训练配置 — Qwen2.5-3B Function Call
+# 框架: Unsloth / LLaMA-Factory (本配置兼容两者)
+
+# ── 模型 ──
+model:
+  name: "Qwen/Qwen2.5-3B-Instruct"
+  dtype: "bfloat16"
+  max_seq_length: 4096
+
+# ── LoRA ──
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  # QLoRA 4-bit (AutoDL 显存充足可改为 16-bit LoRA)
+  quantization: "4bit"   # "4bit" | "8bit" | "none"
+
+# ── 数据 ──
+data:
+  train_path: "data/sft/train.jsonl"
+  val_path: "data/sft/val.jsonl"
+  format: "messages"   # Qwen2.5 chat template
+  max_samples: null     # null = 全部使用
+
+# ── 训练 ──
+training:
+  output_dir: "checkpoints/sft_qwen25_3b"
+  epochs: 3
+  batch_size: 4
+  gradient_accumulation_steps: 4    # 有效 batch = 16
+  learning_rate: 2.0e-4
+  lr_scheduler: "cosine"
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  fp16: false
+  bf16: true
+  logging_steps: 10
+  eval_steps: 50
+  save_steps: 100
+  save_total_limit: 3
+
+# ── 其他 ──
+seed: 42
+report_to: "none"    # "wandb" | "tensorboard" | "none"

@@ -1,0 +1,40 @@
+# DPO 训练配置
+model:
+  name: "checkpoints/sft_qwen25_3b"   # 加载 SFT checkpoint
+  dtype: "bfloat16"
+  max_seq_length: 4096
+
+lora:
+  rank: 64
+  alpha: 128
+  dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  quantization: "4bit"
+
+data:
+  train_path: "data/dpo/preferences.jsonl"
+  format: "dpo"    # prompt / chosen / rejected
+
+training:
+  output_dir: "checkpoints/dpo_qwen25_3b"
+  epochs: 2
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 5.0e-5          # DPO 比 SFT 低一个量级
+  lr_scheduler: "cosine"
+  warmup_ratio: 0.1
+  beta: 0.1                      # DPO 核心超参
+  max_grad_norm: 1.0
+  bf16: true
+  logging_steps: 5
+  save_steps: 50
+  save_total_limit: 2
+
+seed: 42

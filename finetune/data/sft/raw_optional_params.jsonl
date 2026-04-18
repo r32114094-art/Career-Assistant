@@ -1,0 +1,120 @@
+{"user": "我想找一份北京的AI工程师全职工作，最好能远程办公。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "北京", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发岗位的简历，我有3年工作经验，会Python和LangChain，学历是硕士计算机科学。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发", "skills": ["Python", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想练习一下RAG方向的面试，请给我出10道中级难度的题目。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "mid", "count": 10}}}
+{"user": "我想开始一个针对机器学习工程师的模拟面试，重点考察深度学习和系统设计。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "我想学习一下Transformer架构，请给我一份适合初学者的教程，最好带代码示例。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "Transformer架构", "level": "beginner", "include_code": true}}}
+{"user": "我想了解一下PyTorch的自动微分机制，能详细解释一下吗？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "PyTorch的自动微分机制是如何工作的？"}}}
+{"user": "搜索一下上海有没有NLP算法工程师的实习岗位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "上海", "job_type": "intern"}}}
+{"user": "帮我优化一下简历，目标是Agent开发工程师，我精通Python、PyTorch和强化学习，有5年经验，博士学历。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "Agent开发工程师", "skills": ["Python", "PyTorch", "强化学习"], "experience_years": 5, "education": "博士"}}}
+{"user": "我需要一些关于PyTorch的高级面试题，大概8道左右。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 8}}}
+{"user": "我想模拟面试一个数据科学家职位，重点考察统计学习和机器学习基础。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "数据科学家", "focus_areas": ["统计学习", "机器学习基础"]}}}
+{"user": "请写一份关于微调大语言模型的进阶教程，代码示例可有可无。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "微调大语言模型", "level": "advanced", "include_code": false}}}
+{"user": "什么是梯度消失和梯度爆炸问题？在训练深度网络时如何缓解？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "什么是梯度消失和梯度爆炸问题？在训练深度网络时如何缓解？"}}}
+{"user": "帮我看看深圳有没有远程的机器学习工程师兼职工作。", "tool_call": {"name": "search_jobs", "arguments": {"role": "机器学习工程师", "location": "深圳", "job_type": "part-time"}}}
+{"user": "我想申请计算机视觉工程师，技能有OpenCV和TensorFlow，工作2年了，本科毕业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["OpenCV", "TensorFlow"], "experience_years": 2, "education": "本科"}}}
+{"user": "给我5道简单的Transformer基础面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "Transformer", "difficulty": "junior", "count": 5}}}
+{"user": "启动一个AI产品经理的模拟面试，重点考察产品思维和AI技术理解。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI产品经理", "focus_areas": ["产品思维", "AI技术理解"]}}}
+{"user": "我需要一份面向中级开发者的LangChain应用开发教程，一定要有代码。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LangChain应用开发", "level": "intermediate", "include_code": true}}}
+{"user": "对比一下CNN和Transformer在图像分类任务上的优缺点。", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "对比一下CNN和Transformer在图像分类任务上的优缺点。"}}}
+{"user": "我想找一份完全远程的LLM应用开发工作。", "tool_call": {"name": "search_jobs", "arguments": {"role": "LLM应用开发", "location": "remote", "job_type": "remote"}}}
+{"user": "帮我准备一份申请深度学习研究员的简历，目标职位就是这个，我有相关项目经验但没正式工作过。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "深度学习研究员", "skills": [], "experience_years": 0, "education": ""}}}
+{"user": "我想找一份上海的AI工程师全职工作，最好能远程办公", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "上海", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发岗位的简历，我有3年工作经验，会Python和LangChain，硕士是计算机专业", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发", "skills": ["Python", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想准备LLM方向的面试，需要10道中级难度的题目", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "LLM", "difficulty": "mid", "count": 10}}}
+{"user": "启动一个针对AI工程师的模拟面试，重点考察深度学习和系统设计", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "请为我生成一份关于RAG技术的入门教程，不需要包含代码示例", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "RAG", "level": "beginner", "include_code": false}}}
+{"user": "我想了解Transformer架构的底层原理，请详细解释一下", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Transformer架构的底层原理是什么？"}}}
+{"user": "搜索北京地区的NLP算法工程师实习岗位", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "北京", "job_type": "intern"}}}
+{"user": "帮我优化简历，目标是AI产品经理，我有5年经验，技能包括产品规划和用户研究，本科是软件工程", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "AI产品经理", "skills": ["产品规划", "用户研究"], "experience_years": 5, "education": "本科-软件工程"}}}
+{"user": "给我5道关于PyTorch的高级面试题", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 5}}}
+{"user": "开始一个机器学习工程师的模拟面试，重点在模型优化和部署", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["模型优化", "部署"]}}}
+{"user": "写一份面向中级开发者的Agent开发教程，要带代码", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "Agent", "level": "intermediate", "include_code": true}}}
+{"user": "Diffusion模型和GAN的主要区别有哪些？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Diffusion模型和GAN的主要区别有哪些？"}}}
+{"user": "找找看有没有远程的LLM应用开发兼职工作", "tool_call": {"name": "search_jobs", "arguments": {"role": "LLM应用开发", "location": "remote", "job_type": "part-time"}}}
+{"user": "生成一份数据科学家的简历，我擅长Python和SQL，有2年经验，硕士是统计学", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "数据科学家", "skills": ["Python", "SQL"], "experience_years": 2, "education": "硕士-统计学"}}}
+{"user": "需要8道RAG方向的初级面试题", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "junior", "count": 8}}}
+{"user": "模拟面试大模型算法工程师，重点考察Transformer和预训练", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "大模型算法工程师", "focus_areas": ["Transformer", "预训练"]}}}
+{"user": "生成一份高级的微调大模型教程，包含代码", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "微调大模型", "level": "advanced", "include_code": true}}}
+{"user": "注意力机制在神经网络中是如何工作的？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "注意力机制在神经网络中是如何工作的？"}}}
+{"user": "搜索深圳的AI研究员全职岗位", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI研究员", "location": "深圳", "job_type": "full-time"}}}
+{"user": "帮我做一份计算机视觉工程师的简历，我会PyTorch和OpenCV，有1年实习经验，本科是人工智能", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["PyTorch", "OpenCV"], "experience_years": 1, "education": "本科-人工智能"}}}
+{"user": "我想找一份在北京的AI工程师全职工作，最好能远程办公。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "北京", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发岗位的简历，我有3年经验，技能包括Python、PyTorch和LangChain，学历是硕士计算机科学。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发", "skills": ["Python", "PyTorch", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想准备LLM方向的面试，需要10道中级难度的题目。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "LLM", "difficulty": "mid", "count": 10}}}
+{"user": "请帮我启动一个针对机器学习工程师的模拟面试，重点考察深度学习和系统设计。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "我需要一份关于RAG技术的入门教程，最好包含代码示例。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "RAG技术", "level": "beginner", "include_code": true}}}
+{"user": "Transformer架构中的自注意力机制具体是如何工作的？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Transformer架构中的自注意力机制具体是如何工作的？"}}}
+{"user": "搜索一下上海有没有NLP算法工程师的实习机会。", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "上海", "job_type": "intern"}}}
+{"user": "我想优化简历去应聘AI产品经理，我有5年经验，技能是产品规划和团队管理，学历是本科信息管理。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "AI产品经理", "skills": ["产品规划", "团队管理"], "experience_years": 5, "education": "本科-信息管理"}}}
+{"user": "给我5道关于PyTorch的高级面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 5}}}
+{"user": "我想练习Agent方向的模拟面试，职位是AI研究员，重点考察强化学习和论文复现。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI研究员", "focus_areas": ["强化学习", "论文复现"]}}}
+{"user": "请生成一份关于微调大模型的高级教程，代码示例可有可无。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "微调大模型", "level": "advanced", "include_code": false}}}
+{"user": "Diffusion模型和GAN相比，主要的优势和劣势是什么？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Diffusion模型和GAN相比，主要的优势和劣势是什么？"}}}
+{"user": "帮我看看远程的机器学习工程师岗位，地点不限。", "tool_call": {"name": "search_jobs", "arguments": {"role": "机器学习工程师", "location": "remote", "job_type": "remote"}}}
+{"user": "生成一份数据科学家的简历，目标职位是数据科学家，我有2年经验，技能是SQL和Python，硕士统计学毕业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "数据科学家", "skills": ["SQL", "Python"], "experience_years": 2, "education": "硕士-统计学"}}}
+{"user": "我需要8道给初级工程师的RAG面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "junior", "count": 8}}}
+{"user": "启动一个针对大模型算法工程师的模拟面试，重点考察Transformer和工程落地。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "大模型算法工程师", "focus_areas": ["Transformer", "工程落地"]}}}
+{"user": "写一份给中级开发者的LangChain使用教程，一定要带代码。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LangChain使用", "level": "intermediate", "include_code": true}}}
+{"user": "在多智能体系统中，如何有效解决信用分配问题？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "在多智能体系统中，如何有效解决信用分配问题？"}}}
+{"user": "找找深圳的AI算法实习生岗位，最好是全职实习。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI算法", "location": "深圳", "job_type": "intern"}}}
+{"user": "我想申请计算机视觉工程师，有1年实习经验，会OpenCV和深度学习框架，本科是人工智能专业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["OpenCV", "深度学习框架"], "experience_years": 1, "education": "本科-人工智能"}}}
+{"user": "我想找一份上海的AI工程师工作，最好是全职的。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "上海", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发工程师的简历，我有3年工作经验，技能包括Python、PyTorch和LangChain，学历是硕士计算机科学。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发工程师", "skills": ["Python", "PyTorch", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想准备RAG方向的面试，需要10道中级难度的题目。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "mid", "count": 10}}}
+{"user": "我想开始一个针对机器学习工程师的模拟面试，重点考察深度学习和系统设计。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "请为我生成一份关于Transformer模型的入门教程，不需要包含代码示例。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "Transformer模型", "level": "beginner", "include_code": false}}}
+{"user": "我想了解如何优化RAG系统的召回率，请给我一个技术解答。", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "如何优化RAG系统的召回率？"}}}
+{"user": "帮我搜索一下北京的远程NLP算法工程师职位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "北京", "job_type": "remote"}}}
+{"user": "我需要一份针对大模型算法工程师的简历，我有5年经验，技能是TensorFlow和Hugging Face，学历是博士人工智能。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "大模型算法工程师", "skills": ["TensorFlow", "Hugging Face"], "experience_years": 5, "education": "博士-人工智能"}}}
+{"user": "给我5道关于PyTorch的高级面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 5}}}
+{"user": "启动一个针对AI产品经理的模拟面试，重点考察AIGC产品设计和商业模式。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI产品经理", "focus_areas": ["AIGC产品设计", "商业模式"]}}}
+{"user": "请生成一份关于LangChain框架的中级教程，要包含代码。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LangChain框架", "level": "intermediate", "include_code": true}}}
+{"user": "Diffusion模型和GAN的主要区别是什么？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Diffusion模型和GAN的主要区别是什么？"}}}
+{"user": "我想找深圳的AI实习生岗位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI实习生", "location": "深圳", "job_type": "intern"}}}
+{"user": "帮我优化一份简历，目标是计算机视觉工程师。我有2年经验，会OpenCV和YOLO，本科是电子信息工程。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["OpenCV", "YOLO"], "experience_years": 2, "education": "本科-电子信息工程"}}}
+{"user": "我需要8道给初级工程师的Agent相关面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "Agent", "difficulty": "junior", "count": 8}}}
+{"user": "我想模拟面试一个数据科学家职位，重点考察统计学习和机器学习。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "数据科学家", "focus_areas": ["统计学习", "机器学习"]}}}
+{"user": "请写一份关于LoRA微调大模型的高级教程，代码示例是必须的。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LoRA微调大模型", "level": "advanced", "include_code": true}}}
+{"user": "在构建多模态大模型时，如何有效对齐图像和文本的表示空间？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "在构建多模态大模型时，如何有效对齐图像和文本的表示空间？"}}}
+{"user": "搜索杭州的远程兼职AI开发岗位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI开发", "location": "杭州", "job_type": "part-time"}}}
+{"user": "生成一份AIGC算法工程师的简历，我有1年实习经验，技能是Stable Diffusion和CLIP，硕士是数字媒体技术。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "AIGC算法工程师", "skills": ["Stable Diffusion", "CLIP"], "experience_years": 1, "education": "硕士-数字媒体技术"}}}
+{"user": "我想找一份在北京的AI工程师全职工作，最好能远程办公。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "北京", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发岗位的简历，我有3年工作经验，技能包括Python、PyTorch和LangChain，学历是硕士计算机科学。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发", "skills": ["Python", "PyTorch", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想准备一下RAG方向的面试，需要10道中级难度的题目。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "mid", "count": 10}}}
+{"user": "请帮我启动一个针对机器学习工程师的模拟面试，重点考察深度学习和系统设计。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "我想学习一下Transformer架构，要一个适合初学者的教程，最好带代码示例。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "Transformer架构", "level": "beginner", "include_code": true}}}
+{"user": "我想了解什么是梯度消失问题，能详细解释一下吗？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "什么是梯度消失问题？"}}}
+{"user": "搜索上海地区的NLP算法工程师实习岗位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "上海", "job_type": "intern"}}}
+{"user": "帮我优化一下简历，目标是AIGC产品经理，我有5年经验，技能是产品规划和用户研究，学历是本科设计学。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "AIGC产品经理", "skills": ["产品规划", "用户研究"], "experience_years": 5, "education": "本科-设计学"}}}
+{"user": "给我5道关于PyTorch的高级面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 5}}}
+{"user": "我想练习一下AI算法工程师的面试，重点在机器学习和编程能力。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI算法工程师", "focus_areas": ["机器学习", "编程能力"]}}}
+{"user": "生成一个关于LangChain框架的中级教程，代码示例可有可无。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LangChain框架", "level": "intermediate", "include_code": false}}}
+{"user": "Diffusion模型的工作原理是什么？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Diffusion模型的工作原理是什么？"}}}
+{"user": "我想找远程的LLM应用开发工作，地点不限。", "tool_call": {"name": "search_jobs", "arguments": {"role": "LLM应用开发", "location": "remote", "job_type": "remote"}}}
+{"user": "生成一份数据科学家的简历，目标职位是数据科学家，我有2年经验，技能是SQL和Python，硕士统计学毕业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "数据科学家", "skills": ["SQL", "Python"], "experience_years": 2, "education": "硕士-统计学"}}}
+{"user": "需要8道关于Agent技术的初级面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "Agent", "difficulty": "junior", "count": 8}}}
+{"user": "启动一个针对大模型算法工程师的模拟面试，重点考察Transformer和RAG。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "大模型算法工程师", "focus_areas": ["Transformer", "RAG"]}}}
+{"user": "我想学习强化学习，要一个高级教程，必须包含代码。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "强化学习", "level": "advanced", "include_code": true}}}
+{"user": "注意力机制在NLP中是如何应用的？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "注意力机制在NLP中是如何应用的？"}}}
+{"user": "搜索深圳的AI产品经理兼职工作。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI产品经理", "location": "深圳", "job_type": "part-time"}}}
+{"user": "帮我生成一份计算机视觉工程师的简历，目标就是计算机视觉工程师，我有1年实习经验，技能是OpenCV和深度学习，学历是本科人工智能。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["OpenCV", "深度学习"], "experience_years": 1, "education": "本科-人工智能"}}}
+{"user": "我想找一份在北京的AI工程师全职工作，最好能远程办公。", "tool_call": {"name": "search_jobs", "arguments": {"role": "AI工程师", "location": "北京", "job_type": "full-time"}}}
+{"user": "帮我生成一份面向LLM应用开发工程师的简历，我有3年工作经验，会Python、PyTorch和LangChain，硕士是计算机科学专业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "LLM应用开发工程师", "skills": ["Python", "PyTorch", "LangChain"], "experience_years": 3, "education": "硕士-计算机科学"}}}
+{"user": "我想练习一下RAG方向的面试题，要中级难度的，先来8道题吧。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "RAG", "difficulty": "mid", "count": 8}}}
+{"user": "我想开始一个针对机器学习工程师的模拟面试，重点考察深度学习和系统设计。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "机器学习工程师", "focus_areas": ["深度学习", "系统设计"]}}}
+{"user": "请给我写一份关于Transformer模型的入门教程，要包含代码示例。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "Transformer模型", "level": "beginner", "include_code": true}}}
+{"user": "我想了解什么是Agent，能给我详细解释一下吗？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "什么是Agent？"}}}
+{"user": "搜索一下上海的NLP算法工程师职位，实习和全职的都可以看看。", "tool_call": {"name": "search_jobs", "arguments": {"role": "NLP算法工程师", "location": "上海", "job_type": "full-time"}}}
+{"user": "帮我优化一下简历，目标是AIGC产品经理，我有5年产品经验，技能包括需求分析、原型设计和项目管理，学历是本科-软件工程。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "AIGC产品经理", "skills": ["需求分析", "原型设计", "项目管理"], "experience_years": 5, "education": "本科-软件工程"}}}
+{"user": "给我出5道高级难度的PyTorch面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "PyTorch", "difficulty": "senior", "count": 5}}}
+{"user": "我想模拟面试一个数据科学家的职位，重点考察统计学习和机器学习。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "数据科学家", "focus_areas": ["统计学习", "机器学习"]}}}
+{"user": "我需要一份关于LangChain框架的中级教程，最好有代码。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "LangChain框架", "level": "intermediate", "include_code": true}}}
+{"user": "Diffusion模型的工作原理是什么？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "Diffusion模型的工作原理是什么？"}}}
+{"user": "我想找远程的机器学习工程师工作。", "tool_call": {"name": "search_jobs", "arguments": {"role": "机器学习工程师", "location": "remote"}}}
+{"user": "生成一份计算机视觉工程师的简历，我有2年经验，技能是OpenCV和TensorFlow，硕士是人工智能专业。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "计算机视觉工程师", "skills": ["OpenCV", "TensorFlow"], "experience_years": 2, "education": "硕士-人工智能"}}}
+{"user": "给我10道初级难度的机器学习面试题。", "tool_call": {"name": "get_interview_questions", "arguments": {"topic": "机器学习", "difficulty": "junior", "count": 10}}}
+{"user": "开始一个AI算法工程师的模拟面试，重点考察算法和数据结构。", "tool_call": {"name": "start_mock_interview", "arguments": {"role": "AI算法工程师", "focus_areas": ["算法", "数据结构"]}}}
+{"user": "写一份高级的微调大语言模型教程，代码示例可有可无。", "tool_call": {"name": "generate_tutorial", "arguments": {"topic": "微调大语言模型", "level": "advanced", "include_code": false}}}
+{"user": "LoRA和QLoRA有什么区别？", "tool_call": {"name": "ask_ai_question", "arguments": {"question": "LoRA和QLoRA有什么区别？"}}}
+{"user": "搜索深圳的深度学习工程师兼职岗位。", "tool_call": {"name": "search_jobs", "arguments": {"role": "深度学习工程师", "location": "深圳", "job_type": "part-time"}}}
+{"user": "我想生成一份面向大模型推理优化工程师的简历，我有4年经验，会C++、CUDA和Triton，博士是高性能计算方向。", "tool_call": {"name": "generate_resume", "arguments": {"target_role": "大模型推理优化工程师", "skills": ["C++", "CUDA", "Triton"], "experience_years": 4, "education": "博士-高性能计算"}}}
