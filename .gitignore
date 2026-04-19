@@ -1,4 +1,32 @@
+# Environment variables (never commit real keys)
 .env
+**/.env
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
 .ipynb_checkpoints/
+
+# Runtime data & generated output
+data/
+Agent_output/
+
+# Claude Code internal files
+.claude/
+
+# VS Code (optional: keep launch.json if you want to share debug config)
+# .vscode/
+
+# Fine-tune artifacts (large model files)
+finetune/models/
+finetune/output/
+finetune/checkpoints/
+finetune/data/dpo/
+*.bin
+*.safetensors
+*.pt
+
+# OS
+.DS_Store
+Thumbs.db
