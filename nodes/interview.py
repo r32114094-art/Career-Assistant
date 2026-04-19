@@ -8,13 +8,14 @@ nodes/interview.py - 面试类节点函数
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import SystemMessage, AIMessage
 
-from state import State, get_latest_user_text, get_chat_history
+from state import State, get_latest_user_text, get_chat_history, format_profile_context
 from utils import get_current_time
 from agents.interview_agent import InterviewAgent
 
 
 def interview_topics_questions(state: State) -> State:
     """单轮面试题目生成/互动，通过 AgentExecutor 闭环处理。"""
+    profile_ctx = format_profile_context(state.get("user_profile") or {})
     system_message = (
         "You are a good researcher in finding interview questions for Generative AI topics and jobs. "
         "Your task is to provide a list of interview questions for Generative AI topics and job "
@@ -22,6 +23,7 @@ def interview_topics_questions(state: State) -> State:
         "Provide top questions with references and links if possible. "
         "You may ask for clarification if needed. "
         "Generate a .md document containing the questions."
+        + (f"\n\n{profile_ctx}" if profile_ctx else "")
     )
     system_message += f"\n\n[重要环境变量：当前物理时间为 {get_current_time()}。你在搜索面经或题库时，务必加上此年份作为过滤条件。]"
     prompt = ChatPromptTemplate.from_messages([
@@ -45,6 +47,7 @@ def interview_topics_questions(state: State) -> State:
 
 def mock_interview(state: State) -> State:
     """单轮模拟面试：将系统提示与历史消息合并，面试官做一次回复。"""
+    profile_ctx = format_profile_context(state.get("user_profile") or {})
     system_message = (
         "You are a Generative AI Interviewer. You have conducted numerous interviews "
         "for Generative AI roles. "
@@ -52,6 +55,7 @@ def mock_interview(state: State) -> State:
         "engaging in a back-and-forth interview session. "
         "The conversation should not exceed more than 15 to 20 minutes. "
         "At the end of the interview, provide an evaluation for the candidate."
+        + (f"\n\n{profile_ctx}" if profile_ctx else "")
     )
     system_message += f"\n\n[重要环境变量：当前物理时间为 {get_current_time()}。如果在模拟面试中涉及最新的前沿技术，请以此物理时间为发展基线。]"
 

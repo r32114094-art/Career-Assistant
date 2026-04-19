@@ -23,8 +23,8 @@ _model    = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 # ── 主 LLM：用于分类路由（速度快、成本低）────────────────────────
 llm = ChatOpenAI(
     model=_model,
-    openai_api_key=_api_key,
-    openai_api_base=_base_url,
+    api_key=_api_key,
+    base_url=_base_url,
     temperature=0.5,
     verbose=True,
 )
@@ -33,8 +33,8 @@ llm = ChatOpenAI(
 # deepseek-reasoner = DeepSeek-R1（推理增强版），如需更快可改回 deepseek-chat
 llm_pro = ChatOpenAI(
     model=os.getenv("DEEPSEEK_MODEL_PRO", _model),
-    openai_api_key=_api_key,
-    openai_api_base=_base_url,
+    api_key=_api_key,
+    base_url=_base_url,
     temperature=0.7,
     verbose=True,
 )

@@ -18,9 +18,13 @@ DEEPSEEK_API_KEY=
 DEEPSEEK_MODEL=deepseek-chat          # Used for routing/classification
 DEEPSEEK_MODEL_PRO=deepseek-reasoner  # Used for generation tasks
 SERPAPI_API_KEY=
-DATABASE_URL=postgresql://...         # Supabase PostgreSQL for session persistence
 LANGSMITH_TRACING=true                # Optional
 LANGSMITH_API_KEY=                    # Optional
+
+# Memory storage (choose one):
+# Default (local): omit DATABASE_URL → SQLite file saved at data/memory.db
+# Cloud (optional): set DATABASE_URL → PostgreSQL (requires psycopg + langgraph-checkpoint-postgres)
+DATABASE_URL=postgresql://...
 ```
 
 **CLI mode:** `python main.py`

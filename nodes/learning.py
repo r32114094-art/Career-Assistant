@@ -8,13 +8,14 @@ nodes/learning.py - 学习类节点函数
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, AIMessage
 
-from state import State, get_latest_user_text
+from state import State, get_latest_user_text, format_profile_context
 from utils import show_md_file, get_current_time
 from agents.learning_agent import LearningResourceAgent
 
 
 def ask_query_bot(state: State) -> State:
     """单轮 GenAI 专家 Q&A：将系统提示与历史消息合并，调用 LLM 一次。"""
+    profile_ctx = format_profile_context(state.get("user_profile") or {})
     system_message = (
         "You are an expert Generative AI Engineer with extensive experience "
         "in training and guiding others in AI engineering. "
@@ -23,6 +24,7 @@ def ask_query_bot(state: State) -> State:
         "Your role is to assist users by providing insightful solutions "
         "and expert advice on their queries. "
         "Engage in a back-and-forth chat session to address user queries."
+        + (f"\n\n{profile_ctx}" if profile_ctx else "")
     )
     system_message += f"\n\n[重要环境变量：当前物理时间为 {get_current_time()}。请确保你的技术解答符合这个时代的前沿情况。]"
 

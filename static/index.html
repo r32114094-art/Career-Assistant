@@ -36,7 +36,7 @@
 
             <div class="features-grid">
                 <div class="feature-chip"><span class="feature-icon">📚</span>学习路径</div>
-                <div class="feature-chip"><span class="feature-icon">📄</span>简历制作</div>
+                <div class="feature-chip"><span class="feature-icon">📄</span>简历优化</div>
                 <div class="feature-chip"><span class="feature-icon">🎯</span>面试准备</div>
                 <div class="feature-chip"><span class="feature-icon">🔍</span>求职辅助</div>
             </div>
@@ -93,7 +93,7 @@
             <p>👋 你好！我是 <strong>GenAI 职业助手</strong>，可以帮你：</p>
             <div class="quick-actions">
                 <button class="quick-btn" data-msg="我想学习生成式AI，请推荐学习路径">📚 学习 GenAI</button>
-                <button class="quick-btn" data-msg="帮我制作一份AI工程师的简历">📄 制作简历</button>
+                <button class="quick-btn" data-msg="我想优化我的简历，请帮我分析">📄 简历优化</button>
                 <button class="quick-btn" data-msg="我想准备AI面试，有哪些常见面试题？">🎯 面试准备</button>
                 <button class="quick-btn" data-msg="帮我搜索远程AI工程师岗位">🔍 搜索岗位</button>
             </div>
@@ -120,9 +120,40 @@
         </div>
     </div>
 
+    <!-- 简历上传 + JD 输入面板（隐藏，上传成功后显示） -->
+    <div class="resume-panel" id="resume-preview-bar" style="display:none">
+        <!-- 顶部：文件信息 + 取消 -->
+        <div class="resume-panel-header">
+            <div class="resume-preview-info">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="resume-icon"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+                <span id="resume-filename">简历.pdf</span>
+                <span class="resume-chars" id="resume-chars"></span>
+            </div>
+            <button class="btn-cancel-resume" id="btn-cancel-resume" title="取消上传">✕</button>
+        </div>
+        <!-- 中部：JD 粘贴框 -->
+        <div class="jd-input-area">
+            <label class="jd-label">粘贴岗位 JD（可选）— 提供后建议更有针对性</label>
+            <textarea id="jd-input" class="jd-textarea" placeholder="将招聘要求 / 职位描述粘贴到这里…" rows="4"></textarea>
+        </div>
+        <!-- 底部：发送按钮 -->
+        <div class="resume-panel-footer">
+            <button class="btn-send-resume" id="btn-send-resume" disabled>发送给 AI 分析</button>
+        </div>
+    </div>
+
     <!-- 输入区域 -->
     <footer class="chat-input-area" id="chat-input-area">
+        <!-- 隐藏文件 input -->
+        <input type="file" id="resume-file-input" accept=".pdf,.docx,.txt" style="display:none">
         <div class="input-wrapper">
+            <button class="btn-upload" id="btn-upload" title="上传简历 (PDF / DOCX / TXT)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+            </button>
             <textarea id="message-input" placeholder="输入你的问题…" rows="1" autocomplete="off"></textarea>
             <button id="send-btn" class="btn-send" disabled title="发送">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

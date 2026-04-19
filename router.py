@@ -35,7 +35,7 @@ def route_query(state: State) -> str:
     main_intent = rd.get("main_intent", "out_of_scope")
     mapping = {
         "learning": "handle_learning_resource",
-        "resume": "handle_resume_making",
+        "resume": "handle_resume_improvement",
         "interview": "handle_interview_preparation",
         "job_search": "job_search",
         "out_of_scope": "out_of_scope",

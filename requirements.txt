@@ -1,10 +1,17 @@
-langchain==0.3.7
-langchain-community==0.3.7
-langchain-openai>=0.2.0
+# ── Core LangChain / LangGraph stack ──
+langchain>=0.3.15,<0.4.0
+langchain-core>=0.3.63,<0.4.0
+langchain-community>=0.3.15,<0.4.0
+langchain-openai>=0.3.0,<0.4.0
+
+langgraph>=0.3.0,<0.4.0
+langgraph-checkpoint-sqlite        # 本地 SQLite 持久化（默认）
+
 duckduckgo_search==6.3.4
-langgraph==0.2.48
 python-dotenv
 langsmith
+
+# ── 云存储（可选，设置 DATABASE_URL 时启用）──
 langgraph-checkpoint-postgres
 psycopg[binary]
 
@@ -12,3 +19,8 @@ psycopg[binary]
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 websockets>=13.0
+
+# ── 简历文件解析 ──
+pypdf>=4.0.0
+python-docx>=1.1.0
+python-multipart>=0.0.9

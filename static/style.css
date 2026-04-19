@@ -490,6 +490,106 @@ a{color:var(--accent);text-decoration:none}
 }
 .btn-send svg{width:17px;height:17px}
 
+/* ── 上传按钮 ──────────────────────────────────────── */
+.btn-upload{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:var(--transition);
+  flex-shrink:0;
+  margin-right:4px;
+}
+.btn-upload:hover{
+  background:rgba(217,119,6,.1);
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.btn-upload svg{width:16px;height:16px}
+
+/* ── 简历 + JD 面板 ─────────────────────────────────── */
+.resume-panel{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:12px 20px;
+  background:rgba(217,119,6,.06);
+  border-top:1px solid rgba(217,119,6,.2);
+  border-bottom:1px solid rgba(217,119,6,.1);
+}
+.resume-panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.resume-preview-info{
+  display:flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--text-secondary);
+  overflow:hidden;
+}
+.resume-preview-info .resume-icon{
+  width:16px;height:16px;
+  color:var(--accent);flex-shrink:0;
+}
+#resume-filename{
+  font-weight:500;color:var(--text-primary);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:200px;
+}
+.resume-chars{
+  font-size:.78rem;color:var(--text-muted);
+  white-space:nowrap;flex-shrink:0;
+}
+/* JD 输入区 */
+.jd-input-area{display:flex;flex-direction:column;gap:5px;}
+.jd-label{
+  font-size:.78rem;color:var(--text-muted);letter-spacing:.01em;
+}
+.jd-textarea{
+  width:100%;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  color:var(--text-primary);
+  font-size:.85rem;line-height:1.5;
+  padding:8px 12px;
+  resize:vertical;
+  min-height:72px;
+  max-height:180px;
+  box-sizing:border-box;
+  transition:var(--transition);
+  font-family:inherit;
+}
+.jd-textarea::placeholder{color:var(--text-muted);}
+.jd-textarea:focus{
+  outline:none;
+  border-color:var(--border-active);
+  box-shadow:0 0 0 3px var(--accent-glow);
+}
+/* 底部按钮行 */
+.resume-panel-footer{display:flex;justify-content:flex-end;}
+.btn-send-resume{
+  padding:7px 18px;
+  background:var(--accent);
+  border:none;border-radius:var(--radius-md);
+  color:#fff;font-size:.84rem;font-weight:500;
+  cursor:pointer;transition:var(--transition);
+  white-space:nowrap;
+}
+.btn-send-resume:disabled{opacity:.4;cursor:not-allowed;}
+.btn-send-resume:not(:disabled):hover{background:var(--accent-light);}
+.btn-cancel-resume{
+  width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;border:none;
+  color:var(--text-muted);
+  font-size:.85rem;cursor:pointer;border-radius:50%;
+  transition:var(--transition);
+  flex-shrink:0;
+}
+.btn-cancel-resume:hover{background:rgba(255,255,255,.06);color:var(--text-primary);}
+
 /* ── 响应式 ────────────────────────────────────────── */
 @media(max-width:640px){
   .welcome-card{padding:36px 24px 28px;border-radius:var(--radius-lg)}

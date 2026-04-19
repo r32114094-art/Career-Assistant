@@ -26,7 +26,7 @@ _CATEGORIZE_PROMPT = ChatPromptTemplate.from_template(
     "You are a routing classifier. Your ONLY output must be a valid JSON object.\n\n"
     "Categories:\n"
     '- "learning": AI/ML questions, tutorials, blogs, guides, educational content about AI\n'
-    '- "resume": creating, reviewing, or improving resumes and CVs\n'
+    '- "resume": reviewing, improving, or analyzing existing resumes; resume feedback, CV optimization\n'
     '- "interview": interview questions, tips, mock interviews, career advice related to interviews\n'
     '- "job_search": searching for jobs, finding openings, asking about hiring companies\n'
     '- "out_of_scope": completely unrelated to AI careers (cooking, weather, games, math)\n\n'

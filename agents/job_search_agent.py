@@ -17,13 +17,31 @@ from utils import get_current_time
 
 
 def _make_tools(search: SerpAPIWrapper, current_time: str) -> list:
+    jobs_search = SerpAPIWrapper(params={"engine": "google_jobs", "hl": "zh-cn", "gl": "cn"})
+
     @tool
     def search_jobs(role: str, location: str, job_type: str = "full-time") -> str:
         """搜索特定职位和城市的招聘信息。需要提供职位名称和城市，job_type 可选。"""
-        query = f"{role} {location} 招聘 {current_time}"
+        query = f"{role} {location}"
         if job_type and job_type != "full-time":
             query += f" {job_type}"
-        return search.run(query)
+        try:
+            results = jobs_search.results(query)
+            jobs = results.get("jobs_results", [])
+            if not jobs:
+                return search.run(f"{role} {location} 招聘 {current_time}")
+            lines = []
+            for j in jobs[:8]:
+                extensions = j.get("extensions", [])
+                extras = " | ".join(extensions) if extensions else ""
+                lines.append(
+                    f"【{j.get('title', '')}】{j.get('company_name', '')} · {j.get('location', '')}\n"
+                    f"  {extras}\n"
+                    f"  {j.get('description', '')[:120]}..."
+                )
+            return f"找到 {len(jobs)} 个职位（显示前8条）：\n\n" + "\n\n".join(lines)
+        except Exception:
+            return search.run(f"{role} {location} 招聘 {current_time}")
 
     @tool
     def search_salary(role: str, location: str) -> str:

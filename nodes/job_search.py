@@ -14,7 +14,7 @@ nodes/job_search.py - 求职搜索节点函数
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage
 
-from state import State, get_latest_user_text, get_chat_history
+from state import State, get_latest_user_text, get_chat_history, format_profile_context
 from utils import get_current_time
 from agents.job_search_agent import JobSearch
 
@@ -24,6 +24,7 @@ def job_search(state: State) -> State:
 
     不做 interrupt()，也不写文件，使 HITL resume 时的节点重放完全安全。
     """
+    profile_ctx = format_profile_context(state.get("user_profile") or {})
     system_text = (
         "You are an intelligent Job Search Assistant specializing in Generative AI roles. "
         "You have access to four tools — use them selectively based on user intent:\n"
@@ -33,7 +34,8 @@ def job_search(state: State) -> State:
         "- analyze_job_fit: 用户提供了个人背景并想评估与某职位的匹配度时使用；"
         "需从对话中提取 job_description 和 user_background 两个参数。\n\n"
         "搜索到职位后，以 Markdown 格式整理输出，过滤明显过时的信息。\n"
-        f"[当前时间：{get_current_time()}]\n"
+        + (f"{profile_ctx}\n" if profile_ctx else "")
+        + f"[当前时间：{get_current_time()}]\n"
     )
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_text),

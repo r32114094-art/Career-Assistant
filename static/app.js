@@ -26,6 +26,16 @@ const $hitlApprove      = document.getElementById('hitl-approve');
 const $hitlReject       = document.getElementById('hitl-reject');
 const $chatInputArea    = document.getElementById('chat-input-area');
 
+// 简历上传相关
+const $btnUpload        = document.getElementById('btn-upload');
+const $resumeFileInput  = document.getElementById('resume-file-input');
+const $resumePreviewBar = document.getElementById('resume-preview-bar');
+const $resumeFilename   = document.getElementById('resume-filename');
+const $resumeChars      = document.getElementById('resume-chars');
+const $btnSendResume    = document.getElementById('btn-send-resume');
+const $btnCancelResume  = document.getElementById('btn-cancel-resume');
+const $jdInput          = document.getElementById('jd-input');
+
 // ── 状态 ─────────────────────────────────────────────────
 let ws = null;
 let sessionId = '';
@@ -36,6 +46,9 @@ const MAX_RECONNECT = 5;
 let streamingBubble = null;     // 当前正在流式填充的消息气泡
 let streamingRawText = '';      // 流式累积的原始文本
 let isStreaming = false;
+
+// 简历上传相关
+let pendingResumeText = '';     // 已解析的简历文本，等待用户确认发送
 
 // ── 工具函数 ─────────────────────────────────────────────
 
@@ -418,6 +431,89 @@ function enterChat() {
     connectWebSocket();
 }
 
+// ── 简历上传 ─────────────────────────────────────────────
+
+$btnUpload.addEventListener('click', () => {
+    $resumeFileInput.value = '';   // 允许重复上传同一文件
+    $resumeFileInput.click();
+});
+
+$resumeFileInput.addEventListener('change', async () => {
+    const file = $resumeFileInput.files[0];
+    if (!file) return;
+
+    // 显示上传中状态
+    $resumeFilename.textContent = file.name;
+    $resumeChars.textContent = '解析中...';
+    $resumePreviewBar.style.display = 'flex';
+    $btnSendResume.disabled = true;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const resp = await fetch('/api/upload-resume', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!resp.ok) {
+            const err = await resp.json();
+            throw new Error(err.detail || '上传失败');
+        }
+
+        const result = await resp.json();
+        pendingResumeText = result.text;
+
+        $resumeFilename.textContent = result.filename;
+        $resumeChars.textContent = `${result.char_count.toLocaleString()} 字`;
+        $btnSendResume.disabled = false;
+
+    } catch (e) {
+        $resumePreviewBar.style.display = 'none';
+        pendingResumeText = '';
+        addMessage('error', `简历上传失败：${e.message}`);
+    }
+});
+
+$btnSendResume.addEventListener('click', () => {
+    if (!pendingResumeText || !ws || ws.readyState !== WebSocket.OPEN) return;
+
+    const filename = $resumeFilename.textContent;
+    const jdText = ($jdInput.value || '').trim();
+
+    // 构建发送给后端的完整消息
+    let userMsg = `请帮我分析并完善这份简历（文件：${filename}）：\n\n【简历内容】\n${pendingResumeText}`;
+    if (jdText) {
+        userMsg += `\n\n【目标岗位 JD】\n${jdText}`;
+    }
+
+    // 聊天区显示的摘要（不暴露全文）
+    let displayMsg = `📄 已上传简历：${filename}（${$resumeChars.textContent}）`;
+    if (jdText) {
+        const jdPreview = jdText.length > 60 ? jdText.slice(0, 60) + '…' : jdText;
+        displayMsg += `\n📋 岗位JD：${jdPreview}`;
+    }
+    displayMsg += '\n\n请帮我分析并针对该岗位给出改进建议。';
+    addMessage('user', displayMsg);
+
+    ws.send(JSON.stringify({ type: 'message', content: userMsg }));
+
+    // 隐藏面板、清空状态
+    $resumePreviewBar.style.display = 'none';
+    pendingResumeText = '';
+    $jdInput.value = '';
+
+    const wm = document.querySelector('.welcome-message');
+    if (wm) wm.style.display = 'none';
+});
+
+$btnCancelResume.addEventListener('click', () => {
+    $resumePreviewBar.style.display = 'none';
+    pendingResumeText = '';
+    $jdInput.value = '';
+});
+
 // ── 退出 ─────────────────────────────────────────────────
 $logoutBtn.addEventListener('click', () => {
     if (ws) ws.close();
@@ -436,6 +532,9 @@ $logoutBtn.addEventListener('click', () => {
         </div>`;
     hideHitlPanel();
     removeThinking();
+    $resumePreviewBar.style.display = 'none';
+    pendingResumeText = '';
+    $jdInput.value = '';
     setConnectionStatus('connecting');
     sessionId = '';
     reconnectAttempts = 0;

@@ -11,7 +11,6 @@ workflow.py - LangGraph 工作流定义
 import os
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END, START
-from langgraph.checkpoint.postgres import PostgresSaver
 
 from state import State
 from nodes import (
@@ -23,10 +22,11 @@ from nodes import (
     tutorial_agent,
     interview_topics_questions,
     mock_interview,
-    handle_resume_making,
+    handle_resume_improvement,
     job_search,
     job_search_review,
     out_of_scope,
+    update_profile,
 )
 from router import route_query, route_interview, route_learning, route_job_search
 
@@ -52,7 +52,7 @@ def build_workflow():
     workflow.add_node("categorize", categorize)
     workflow.add_node("clarify", clarify)
     workflow.add_node("handle_learning_resource", handle_learning_resource)
-    workflow.add_node("handle_resume_making", handle_resume_making)
+    workflow.add_node("handle_resume_improvement", handle_resume_improvement)
     workflow.add_node("handle_interview_preparation", handle_interview_preparation)
     workflow.add_node("job_search", job_search)
     workflow.add_node("job_search_review", job_search_review)
@@ -61,6 +61,7 @@ def build_workflow():
     workflow.add_node("tutorial_agent", tutorial_agent)
     workflow.add_node("ask_query_bot", ask_query_bot)
     workflow.add_node("out_of_scope", out_of_scope)
+    workflow.add_node("update_profile", update_profile)
 
     # ── 起始边：从 START 到分类节点 ──────────────────────
     workflow.add_edge(START, "categorize")
@@ -72,7 +73,7 @@ def build_workflow():
         {
             "clarify": "clarify",
             "handle_learning_resource": "handle_learning_resource",
-            "handle_resume_making": "handle_resume_making",
+            "handle_resume_improvement": "handle_resume_improvement",
             "handle_interview_preparation": "handle_interview_preparation",
             "job_search": "job_search",
             "out_of_scope": "out_of_scope",
@@ -99,36 +100,47 @@ def build_workflow():
         },
     )
 
-    # ── 终止边 ──────────────────────────────────────────
-    workflow.add_edge("handle_resume_making", END)
-    # job_search → job_search_review（有搜索结果）或 END（只是追问对话）
+    # ── 终止边：所有叶子节点先经过 update_profile 再 END ────
+    workflow.add_edge("handle_resume_improvement", "update_profile")
     workflow.add_conditional_edges(
         "job_search",
         route_job_search,
         {
             "job_search_review": "job_search_review",
-            "end": END,
+            "end": "update_profile",
         },
     )
-    workflow.add_edge("job_search_review", END)
-    workflow.add_edge("interview_topics_questions", END)
-    workflow.add_edge("mock_interview", END)
-    workflow.add_edge("ask_query_bot", END)
-    workflow.add_edge("tutorial_agent", END)
-    workflow.add_edge("clarify", END)
-    workflow.add_edge("out_of_scope", END)
+    workflow.add_edge("job_search_review", "update_profile")
+    workflow.add_edge("interview_topics_questions", "update_profile")
+    workflow.add_edge("mock_interview", "update_profile")
+    workflow.add_edge("ask_query_bot", "update_profile")
+    workflow.add_edge("tutorial_agent", "update_profile")
+    workflow.add_edge("clarify", "update_profile")
+    workflow.add_edge("out_of_scope", "update_profile")
+    workflow.add_edge("update_profile", END)
 
-    # ── 挂载 PostgreSQL 持久化记忆并编译 ────────────────────
+    # ── 挂载持久化记忆并编译 ─────────────────────────────────
     load_dotenv()
     db_url = os.getenv("DATABASE_URL")
-    if not db_url:
-        raise RuntimeError("DATABASE_URL 环境变量未设置，请检查 .env 文件")
 
-    import psycopg
-    conn = psycopg.Connection.connect(
-        db_url, autocommit=True, prepare_threshold=0
-    )
-    postgres_saver = PostgresSaver(conn)
-    postgres_saver.setup()  # 首次运行时自动创建 checkpoint 表
-    app = workflow.compile(checkpointer=postgres_saver)
+    if db_url:
+        # 云模式：PostgreSQL（需安装 langgraph-checkpoint-postgres + psycopg）
+        from langgraph.checkpoint.postgres import PostgresSaver
+        import psycopg
+        conn = psycopg.Connection.connect(
+            db_url, autocommit=True, prepare_threshold=0
+        )
+        saver = PostgresSaver(conn)
+        saver.setup()
+        print("[Memory] 使用 PostgreSQL 云存储")
+    else:
+        # 本地模式（默认）：SQLite 单文件，重启后历史保留
+        import sqlite3
+        from langgraph.checkpoint.sqlite import SqliteSaver
+        os.makedirs("data", exist_ok=True)
+        conn = sqlite3.connect("data/memory.db", check_same_thread=False)
+        saver = SqliteSaver(conn)
+        print("[Memory] 使用本地 SQLite 存储 (data/memory.db)")
+
+    app = workflow.compile(checkpointer=saver)
     return app

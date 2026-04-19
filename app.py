@@ -16,8 +16,8 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from langchain_core.messages import AIMessage, AIMessageChunk, HumanMessage
 from langgraph.types import Command
@@ -32,7 +32,7 @@ _NODE_LABELS = {
     "categorize":                  "⚙️ 思考中，正在理解您的意图...",
     "handle_learning_resource":    "⚙️ 思考中，正在分析学习需求...",
     "handle_interview_preparation":"⚙️ 思考中，正在分析面试需求...",
-    "handle_resume_making":        "✍️ 正在生成简历内容...",
+    "handle_resume_improvement":   "✍️ 正在分析简历内容...",
     "job_search":                  "🔍 正在进行网页搜索...",
     "job_search_review":           "✅ 搜索完成，等待您审核...",
     "mock_interview":              "🎯 正在模拟面试场景...",
@@ -47,6 +47,7 @@ _INTERNAL_NODES = {
     "categorize",
     "handle_learning_resource",
     "handle_interview_preparation",
+    "update_profile",
 }
 
 # ── 应用生命周期 ────────────────────────────────────────────
@@ -77,6 +78,54 @@ async def index():
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "workflow_ready": _app_workflow is not None}
+
+
+@app.post("/api/upload-resume")
+async def upload_resume(file: UploadFile = File(...)):
+    """解析上传的简历文件，提取纯文本返回给前端。
+
+    支持格式：PDF (.pdf)、Word (.docx)、纯文本 (.txt)
+    返回：{"text": "...", "filename": "...", "char_count": N}
+    """
+    filename = file.filename or ""
+    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+
+    if ext not in ("pdf", "docx", "txt"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"不支持的文件类型 .{ext}，请上传 PDF、DOCX 或 TXT 文件",
+        )
+
+    raw_bytes = await file.read()
+
+    try:
+        if ext == "pdf":
+            import io
+            from pypdf import PdfReader
+            reader = PdfReader(io.BytesIO(raw_bytes))
+            pages_text = [page.extract_text() or "" for page in reader.pages]
+            text = "\n\n".join(pages_text).strip()
+
+        elif ext == "docx":
+            import io
+            from docx import Document
+            doc = Document(io.BytesIO(raw_bytes))
+            text = "\n".join(p.text for p in doc.paragraphs).strip()
+
+        else:  # txt
+            text = raw_bytes.decode("utf-8", errors="replace").strip()
+
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"文件解析失败：{e}")
+
+    if not text:
+        raise HTTPException(status_code=422, detail="文件内容为空，无法提取文本")
+
+    return JSONResponse({
+        "text": text,
+        "filename": filename,
+        "char_count": len(text),
+    })
 
 
 # ── 流式处理核心 ────────────────────────────────────────────

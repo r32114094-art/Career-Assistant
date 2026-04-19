@@ -9,6 +9,64 @@ from langchain_core.messages import HumanMessage
 from langgraph.graph.message import add_messages
 
 
+# ── 用户画像 ──────────────────────────────────────────────────────────────────
+
+class UserProfile(TypedDict, total=False):
+    name: Optional[str]               # 用户姓名
+    target_role: Optional[str]        # 目标职位（如 "NLP Engineer"）
+    skill_level: Optional[str]        # beginner / intermediate / senior
+    background: Optional[str]         # 教育/工作背景摘要
+    years_of_experience: Optional[int]
+    skills: list                      # 技术技能列表
+    preferred_location: Optional[str] # 求职地点偏好
+    preferred_work_type: Optional[str] # remote / onsite / hybrid
+    interests: list                   # 技术兴趣方向
+
+
+def merge_profile(old: dict, new: dict) -> dict:
+    """用户画像增量合并 Reducer：新字段覆盖旧字段，list 字段做有序去重并集。"""
+    merged = dict(old or {})
+    for k, v in (new or {}).items():
+        if v is None:
+            continue
+        if isinstance(v, list):
+            existing = merged.get(k) or []
+            merged[k] = list(dict.fromkeys(existing + v))
+        else:
+            merged[k] = v
+    return merged
+
+
+def format_profile_context(profile: dict) -> str:
+    """将用户画像格式化为可注入 system prompt 的文本块。"""
+    if not profile:
+        return ""
+    level_map = {"beginner": "初学者", "intermediate": "中级", "senior": "高级/资深"}
+    work_map = {"remote": "远程", "onsite": "线下", "hybrid": "混合"}
+    lines = []
+    if profile.get("name"):
+        lines.append(f"姓名：{profile['name']}")
+    if profile.get("target_role"):
+        lines.append(f"目标职位：{profile['target_role']}")
+    if profile.get("skill_level"):
+        lines.append(f"技能水平：{level_map.get(profile['skill_level'], profile['skill_level'])}")
+    if profile.get("years_of_experience") is not None:
+        lines.append(f"工作年限：{profile['years_of_experience']} 年")
+    if profile.get("background"):
+        lines.append(f"背景：{profile['background']}")
+    if profile.get("skills"):
+        lines.append(f"技能栈：{', '.join(profile['skills'])}")
+    if profile.get("interests"):
+        lines.append(f"兴趣方向：{', '.join(profile['interests'])}")
+    if profile.get("preferred_location"):
+        lines.append(f"求职地点偏好：{profile['preferred_location']}")
+    if profile.get("preferred_work_type"):
+        lines.append(f"工作方式偏好：{work_map.get(profile['preferred_work_type'], profile['preferred_work_type'])}")
+    if not lines:
+        return ""
+    return "[用户画像]\n" + "\n".join(lines)
+
+
 class RoutingDecision(TypedDict):
     """分类节点输出的结构化路由决策。
 
@@ -40,6 +98,7 @@ class State(TypedDict):
         pending_job_results: 求职搜索完成后的原始 Markdown 文本，
                              暂存供 job_search_review 节点做 HITL 审核用，
                              审核通过后才写入文件。
+        user_profile: 跨轮次持久化的用户画像，由 update_profile 节点增量更新。
     """
     messages: Annotated[list, add_messages]
     category: str
@@ -47,6 +106,7 @@ class State(TypedDict):
     clarify_count: int
     response: str
     pending_job_results: str
+    user_profile: Annotated[dict, merge_profile]
 
 
 def get_latest_user_text(state: State) -> str:
