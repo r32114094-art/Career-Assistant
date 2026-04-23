@@ -7,7 +7,7 @@ auth.py - 轻量认证模块（统一口令 + 内存 Token）
 使用方式：
     from auth import login, verify_token, logout
 
-    token = login("barry", "genai2026")   # 用户名自取，口令需匹配列表中任一
+    token = login("barry", "your_code")   # 用户名自取，口令需匹配列表中任一
     user_id = verify_token(token)          # 合法返回 user_id，否则 None
     logout(token)                          # 销毁 token
 """

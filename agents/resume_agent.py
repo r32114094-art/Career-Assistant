@@ -32,7 +32,7 @@ class ResumeImprover:
             handle_parsing_errors=True,
         )
 
-    def Improve_Resume(self, user_input: str, chat_history: list = None) -> str:
+    def improve_resume(self, user_input: str, chat_history: list = None) -> str:
         """单轮简历改进对话。
 
         Agent 根据上下文（简历内容 + 可选 JD）决定是追问还是给出改进建议。

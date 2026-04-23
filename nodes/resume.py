@@ -63,7 +63,7 @@ def handle_resume_improvement(state: State) -> State:
     chat_history = get_chat_history(state)
 
     improver = ResumeImprover(prompt)
-    response_text = improver.Improve_Resume(user_text, chat_history)
+    response_text = improver.improve_resume(user_text, chat_history)
 
     return {
         "messages": [AIMessage(content=response_text)],

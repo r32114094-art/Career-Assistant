@@ -27,6 +27,15 @@ finetune/data/dpo/
 *.safetensors
 *.pt
 
+# Third-party repos (not our code)
+awesome-claude-skills/
+
+# Fine-tune pipeline (contains .env with keys & large model files)
+finetune/
+
+# Claude Code agent config
+.agents/
+
 # OS
 .DS_Store
 Thumbs.db
