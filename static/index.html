@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenAI 职业助手 — 你的 AI 职业规划伙伴</title>
-    <meta name="description" content="GenAI Career Assistant — 学习路径规划、简历制作、面试准备、求职辅助，一站式 AI 职业服务。">
+    <title>伯乐 Bole — 世有伯乐，然后有千里马</title>
+    <meta name="description" content="伯乐 Bole — 你的 AI 职业伯乐，助你成为千里马。学习路径、简历优化、面试准备、求职辅助，一站式 AI 职业服务。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Marked.js for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body data-theme="light">
 
 <!-- ═══════════════ 欢迎 / 登录屏 ═══════════════ -->
 <div id="welcome-screen" class="screen active">
@@ -21,17 +24,11 @@
         <div class="welcome-card">
             <div class="logo-area">
                 <div class="logo-icon">
-                    <svg viewBox="0 0 48 48" fill="none">
-                        <circle cx="24" cy="24" r="22" stroke="url(#grad1)" stroke-width="2.5"/>
-                        <path d="M16 20C16 20 19 16 24 16C29 16 32 20 32 20" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M14 28C14 28 18 34 24 34C30 34 34 28 34 28" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="20" cy="23" r="1.5" fill="#D97706"/>
-                        <circle cx="28" cy="23" r="1.5" fill="#D97706"/>
-                        <defs><linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#D97706"/><stop offset="1" stop-color="#B45309"/></linearGradient></defs>
-                    </svg>
+                    <img src="/static/bole-avatar.png" alt="伯乐" style="width:88px;height:88px;border-radius:50%;object-fit:cover;box-shadow:0 4px 24px rgba(217,119,6,.25);border:3px solid rgba(217,119,6,.3);">
                 </div>
-                <h1 class="welcome-title">GenAI 职业助手</h1>
-                <p class="welcome-subtitle">你开启生成式 AI 职业生涯的终极指南 🚀</p>
+                <h1 class="welcome-title">伯乐 <span style="font-size:0.6em;opacity:0.7;font-weight:400">Bole</span></h1>
+                <p class="welcome-subtitle">世有伯乐，然后有千里马 🐴</p>
+                <p class="welcome-subtitle" style="font-size:0.9em;opacity:0.65;margin-top:4px">你的 AI 职业伯乐，助你成为千里马</p>
             </div>
 
             <div class="features-grid">
@@ -42,15 +39,29 @@
             </div>
 
             <div class="login-section">
-                <label class="input-label" for="user-id-input">输入你的用户 ID 开始对话</label>
+                <label class="input-label" for="user-id-input">你的名字</label>
+                <div class="input-group" style="margin-bottom: 12px">
+                    <input type="text" id="user-id-input" placeholder="随便取一个，如：barry" autocomplete="username" spellcheck="false">
+                </div>
+                <label class="input-label" for="password-input">访问口令</label>
                 <div class="input-group">
-                    <input type="text" id="user-id-input" placeholder="例如：barry_2025" autocomplete="off" spellcheck="false">
+                    <input type="password" id="password-input" placeholder="管理员发放的口令" autocomplete="current-password">
                     <button id="start-btn" class="btn-primary" disabled>
-                        <span class="btn-text">进入助手</span>
+                        <span class="btn-text">登录</span>
                         <svg class="btn-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
                     </button>
                 </div>
-                <p class="input-hint">同一 ID 可恢复历史对话</p>
+                <p class="login-error" id="login-error" style="display:none; color:#ef4444; font-size:0.85rem; margin-top:8px;"></p>
+                <p class="input-hint">你的名字即用户 ID，同名会话画像自动互通</p>
+
+                <div style="display:flex;align-items:center;gap:12px;margin:18px 0 10px">
+                    <hr style="flex:1;border:none;border-top:1px solid rgba(150,150,150,.2)">
+                    <span style="font-size:0.8rem;color:var(--text-muted);white-space:nowrap">或者</span>
+                    <hr style="flex:1;border:none;border-top:1px solid rgba(150,150,150,.2)">
+                </div>
+                <button id="guest-btn" class="btn-primary" style="width:100%;background:transparent;border:1.5px solid var(--accent);color:var(--accent);justify-content:center;gap:6px">
+                    🚀 <span>游客体验</span><span style="font-size:0.8em;opacity:0.65;margin-left:4px">（无需口令）</span>
+                </button>
             </div>
         </div>
     </div>
@@ -58,21 +69,54 @@
 
 <!-- ═══════════════ 聊天屏 ═══════════════ -->
 <div id="chat-screen" class="screen">
+    <!-- 左侧会话列表 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user">
+                <span class="sidebar-user-avatar" id="sidebar-user-avatar">U</span>
+                <div class="sidebar-user-info">
+                    <span class="sidebar-user-label">用户</span>
+                    <span class="sidebar-user-id" id="sidebar-user-id">—</span>
+                </div>
+            </div>
+            <button class="btn-new-chat" id="btn-new-chat" title="新建对话">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/></svg>
+                <span>新建对话</span>
+            </button>
+        </div>
+        <div class="sidebar-list" id="sidebar-list">
+            <!-- 会话列表通过 JS 注入 -->
+        </div>
+        <div class="sidebar-footer">
+            <button class="btn-profile" id="btn-profile">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                我的画像
+            </button>
+            <button class="btn-theme-toggle" id="btn-theme-toggle" title="切换暗色/亮色模式">
+                <svg id="theme-icon-sun" viewBox="0 0 20 20" fill="currentColor" style="display:none"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+                <svg id="theme-icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                <span id="theme-label">暗色模式</span>
+            </button>
+            <button class="btn-logout" id="logout-btn">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm4.293 4.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414L11.414 10l1.293 1.293a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L8.586 10 7.293 8.707a1 1 0 010-1.414z"/></svg>
+                退出登录
+            </button>
+        </div>
+    </aside>
+
+    <!-- 右侧主区 -->
+    <div class="chat-main">
     <!-- 顶部导航栏 -->
     <header class="chat-header">
         <div class="header-left">
+            <button class="btn-icon btn-toggle-sidebar" id="btn-toggle-sidebar" title="切换侧边栏">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+            </button>
             <div class="header-avatar">
-                <svg viewBox="0 0 28 28" fill="none">
-                    <circle cx="14" cy="14" r="12" stroke="url(#grad2)" stroke-width="1.8"/>
-                    <path d="M9 12C9 12 11 9 14 9C17 9 19 12 19 12" stroke="url(#grad2)" stroke-width="1.4" stroke-linecap="round"/>
-                    <circle cx="12" cy="13.5" r="1" fill="#D97706"/>
-                    <circle cx="16" cy="13.5" r="1" fill="#D97706"/>
-                    <path d="M10 17C10 17 11.5 20 14 20C16.5 20 18 17 18 17" stroke="url(#grad2)" stroke-width="1.4" stroke-linecap="round"/>
-                    <defs><linearGradient id="grad2" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#D97706"/><stop offset="1" stop-color="#B45309"/></linearGradient></defs>
-                </svg>
+                <img src="/static/bole-avatar.png" alt="伯乐" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
             </div>
             <div class="header-info">
-                <span class="header-title">GenAI 职业助手</span>
+                <span class="header-title" id="current-session-title">伯乐 Bole</span>
                 <span class="header-status" id="connection-status">
                     <span class="status-dot"></span>
                     <span class="status-text">连接中...</span>
@@ -81,18 +125,15 @@
         </div>
         <div class="header-right">
             <span class="session-badge" id="session-badge"></span>
-            <button class="btn-icon" id="logout-btn" title="退出">
-                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm4.293 4.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414L11.414 10l1.293 1.293a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L8.586 10 7.293 8.707a1 1 0 010-1.414z"/></svg>
-            </button>
         </div>
     </header>
 
     <!-- 消息区域 -->
     <main class="chat-messages" id="chat-messages">
         <div class="welcome-message">
-            <p>👋 你好！我是 <strong>GenAI 职业助手</strong>，可以帮你：</p>
+            <p>🐴 你好！我是<strong>伯乐</strong>，你的 AI 职业助手，可以帮你：</p>
             <div class="quick-actions">
-                <button class="quick-btn" data-msg="我想学习生成式AI，请推荐学习路径">📚 学习 GenAI</button>
+                <button class="quick-btn" data-msg="我想学习生成式AI，请推荐学习路径">📚 学习路径</button>
                 <button class="quick-btn" data-msg="我想优化我的简历，请帮我分析">📄 简历优化</button>
                 <button class="quick-btn" data-msg="我想准备AI面试，有哪些常见面试题？">🎯 面试准备</button>
                 <button class="quick-btn" data-msg="帮我搜索远程AI工程师岗位">🔍 搜索岗位</button>
@@ -163,6 +204,97 @@
             </button>
         </div>
     </footer>
+    <!-- 滚动到底部按钮 -->
+    <button class="scroll-bottom-btn" id="scroll-bottom-btn" title="滚动到底部">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+    </button>
+    </div><!-- /chat-main -->
+
+<!-- 复制成功 Toast -->
+<div class="copy-toast" id="copy-toast">✓ 已复制到剪贴板</div>
+</div>
+
+<!-- ═══════════════ 画像 Modal ═══════════════ -->
+<div id="profile-modal" class="modal-overlay" style="display:none">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div class="modal-title">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                我的画像
+            </div>
+            <button class="modal-close" id="profile-modal-close">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg>
+            </button>
+        </div>
+        <p class="modal-desc">AI 从对话中自动提取的信息，你可以随时修改。保存后下次对话即时生效。</p>
+
+        <div class="modal-body" id="profile-form-body">
+            <div class="profile-row">
+                <div class="profile-field">
+                    <label>姓名</label>
+                    <input type="text" id="pf-name" placeholder="例：张伟">
+                </div>
+                <div class="profile-field">
+                    <label>目标职位</label>
+                    <input type="text" id="pf-target-role" placeholder="例：NLP Engineer">
+                </div>
+            </div>
+            <div class="profile-row">
+                <div class="profile-field">
+                    <label>技能水平</label>
+                    <select id="pf-skill-level">
+                        <option value="">— 未设置 —</option>
+                        <option value="beginner">初学者</option>
+                        <option value="intermediate">中级</option>
+                        <option value="senior">高级 / 资深</option>
+                    </select>
+                </div>
+                <div class="profile-field">
+                    <label>工作年限</label>
+                    <input type="number" id="pf-years" placeholder="例：3" min="0" max="50">
+                </div>
+            </div>
+            <div class="profile-row">
+                <div class="profile-field">
+                    <label>求职地点偏好</label>
+                    <input type="text" id="pf-location" placeholder="例：北京 / 上海 / 远程">
+                </div>
+                <div class="profile-field">
+                    <label>工作方式</label>
+                    <select id="pf-work-type">
+                        <option value="">— 未设置 —</option>
+                        <option value="remote">远程</option>
+                        <option value="onsite">线下</option>
+                        <option value="hybrid">混合</option>
+                    </select>
+                </div>
+            </div>
+            <div class="profile-field profile-field-full">
+                <label>背景介绍</label>
+                <textarea id="pf-background" rows="2" placeholder="例：计算机科学硕士，2 年 NLP 工程经验"></textarea>
+            </div>
+            <div class="profile-field profile-field-full">
+                <label>技能栈 <span class="field-hint">用逗号或回车分隔</span></label>
+                <div class="tag-input-wrap" id="pf-skills-wrap">
+                    <div class="tag-list" id="pf-skills-tags"></div>
+                    <input type="text" id="pf-skills-input" placeholder="输入后按回车添加…">
+                </div>
+            </div>
+            <div class="profile-field profile-field-full">
+                <label>兴趣方向 <span class="field-hint">用逗号或回车分隔</span></label>
+                <div class="tag-input-wrap" id="pf-interests-wrap">
+                    <div class="tag-list" id="pf-interests-tags"></div>
+                    <input type="text" id="pf-interests-input" placeholder="输入后按回车添加…">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <span class="profile-save-msg" id="profile-save-msg"></span>
+            <button class="btn-secondary" id="profile-cancel-btn">取消</button>
+            <button class="btn-primary" id="profile-save-btn">保存画像</button>
+        </div>
+    </div>
 </div>
 
 <script src="/static/app.js"></script>

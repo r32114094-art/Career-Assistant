@@ -16,12 +16,14 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException, Request, Query
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from langchain_core.messages import AIMessage, AIMessageChunk, HumanMessage
 from langgraph.types import Command
 
+import auth
+import user_store
 from workflow import build_workflow
 
 # ── 全局线程池 ──────────────────────────────────────────────
@@ -78,6 +80,110 @@ async def index():
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "workflow_ready": _app_workflow is not None}
+
+
+# ── 鉴权辅助 ─────────────────────────────────────────────────
+
+def _require_auth(request: Request, user_id: str) -> str:
+    """从 Authorization 头校验 token，并确保 token 对应的 user_id 与路径一致。"""
+    token = (request.headers.get("authorization") or "").removeprefix("Bearer ").strip()
+    authenticated_user = auth.verify_token(token)
+    if not authenticated_user:
+        raise HTTPException(status_code=401, detail="未登录或 token 已过期")
+    if authenticated_user != user_id:
+        raise HTTPException(status_code=403, detail="无权访问该用户数据")
+    return authenticated_user
+
+
+# ── 登录 / 登出 ──────────────────────────────────────────────
+
+@app.post("/api/login")
+async def api_login(body: dict):
+    """用户名 + 统一口令登录，返回 token。"""
+    username = (body.get("username") or "").strip().lower()
+    password = (body.get("password") or "").strip()
+    if not username or not password:
+        raise HTTPException(status_code=400, detail="请输入名字和口令")
+    if len(username) < 2:
+        raise HTTPException(status_code=400, detail="名字至少 2 个字符")
+    token = auth.login(username, password)
+    if not token:
+        raise HTTPException(status_code=401, detail="访问口令错误")
+    return {"token": token, "user_id": username}
+
+
+@app.post("/api/guest-login")
+async def api_guest_login():
+    """游客体验登录，无需口令，自动分配临时身份。"""
+    token, user_id = auth.guest_login()
+    return {"token": token, "user_id": user_id, "is_guest": True}
+
+
+@app.post("/api/logout")
+async def api_logout(request: Request):
+    """销毁 token，退出登录。"""
+    token = (request.headers.get("authorization") or "").removeprefix("Bearer ").strip()
+    auth.logout(token)
+    return {"status": "ok"}
+
+
+# ── 用户 / 会话管理 REST ─────────────────────────────────────
+
+@app.get("/api/users/{user_id}/sessions")
+async def api_list_sessions(user_id: str, request: Request):
+    """列出用户的所有会话（按最近活跃倒序）。"""
+    _require_auth(request, user_id)
+    return {"user_id": user_id, "sessions": user_store.list_sessions(user_id)}
+
+
+@app.post("/api/users/{user_id}/sessions")
+async def api_create_session(user_id: str, request: Request, body: dict | None = None):
+    """创建新会话，返回 {session_id, title, created_at, updated_at}。"""
+    _require_auth(request, user_id)
+    title = (body or {}).get("title") or "新对话"
+    session = user_store.create_session(user_id, title=title)
+    return session
+
+
+@app.delete("/api/users/{user_id}/sessions/{session_id}")
+async def api_delete_session(user_id: str, session_id: str, request: Request):
+    """删除会话元信息（checkpoint 数据保留，可后续清理）。"""
+    _require_auth(request, user_id)
+    ok = user_store.delete_session(user_id, session_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="session not found")
+    return {"status": "deleted", "session_id": session_id}
+
+
+@app.patch("/api/users/{user_id}/sessions/{session_id}")
+async def api_update_session(user_id: str, session_id: str, body: dict, request: Request):
+    """更新会话标题等元信息。"""
+    _require_auth(request, user_id)
+    allowed = {k: v for k, v in body.items() if k in ("title",)}
+    if not allowed:
+        raise HTTPException(status_code=400, detail="no valid fields")
+    user_store.update_session_meta(user_id, session_id, **allowed)
+    return {"status": "ok"}
+
+
+@app.get("/api/users/{user_id}/profile")
+async def api_get_profile(user_id: str, request: Request):
+    """获取用户画像（跨会话持久化）。"""
+    _require_auth(request, user_id)
+    return {"user_id": user_id, "profile": user_store.get_profile(user_id)}
+
+
+@app.put("/api/users/{user_id}/profile")
+async def api_save_profile(user_id: str, body: dict, request: Request):
+    """覆盖保存用户画像（前端完整提交，后端直接替换）。"""
+    _require_auth(request, user_id)
+    allowed_keys = {
+        "name", "target_role", "skill_level", "years_of_experience",
+        "background", "skills", "interests", "preferred_location", "preferred_work_type",
+    }
+    cleaned = {k: v for k, v in body.items() if k in allowed_keys and v not in (None, "", [])}
+    user_store.save_profile(user_id, cleaned)
+    return {"status": "ok", "profile": cleaned}
 
 
 @app.post("/api/upload-resume")
@@ -312,9 +418,17 @@ def _sync_get_state(workflow, config):
 
 # ── WebSocket 聊天端点 ──────────────────────────────────────
 
-@app.websocket("/ws/{session_id}")
-async def ws_chat(websocket: WebSocket, session_id: str):
+@app.websocket("/ws/{user_id}/{session_id}")
+async def ws_chat(websocket: WebSocket, user_id: str, session_id: str, token: str = Query(default="")):
     """WebSocket 聊天处理 — 流式输出 + HITL 审核
+
+    路径参数：
+        user_id    : 用户标识
+        session_id : 用户名下某个具体会话 ID
+    查询参数：
+        token      : 登录后获得的认证 token
+
+    thread_id 命名规则：{user_id}::{session_id}，复用 LangGraph Checkpointer。
 
     消息协议（JSON）：
         客户端 → 服务端：
@@ -330,14 +444,25 @@ async def ws_chat(websocket: WebSocket, session_id: str):
             {"type": "hitl_request",  "instruction": "提示", "preview": "预览"}
             {"type": "thinking",      "status": true/false}
             {"type": "error",         "content": "错误信息"}
-            {"type": "connected",     "session_id": "xxx"}
+            {"type": "connected",     "user_id": "...", "session_id": "xxx"}
     """
+    # WebSocket 鉴权：校验 token
+    authenticated_user = auth.verify_token(token)
+    if not authenticated_user or authenticated_user != user_id:
+        await websocket.close(code=4001, reason="认证失败")
+        return
+
     await websocket.accept()
-    config = {"configurable": {"thread_id": session_id}}
+    thread_id = user_store.make_thread_id(user_id, session_id)
+    config = {"configurable": {"thread_id": thread_id, "user_id": user_id}}
     loop = asyncio.get_event_loop()
+
+    # 确保会话元信息存在（老链接 / 手工构造 URL 时自动补建）
+    user_store.touch_session(user_id, session_id)
 
     await websocket.send_json({
         "type": "connected",
+        "user_id": user_id,
         "session_id": session_id,
     })
 
@@ -360,7 +485,7 @@ async def ws_chat(websocket: WebSocket, session_id: str):
                     "messages": history,
                 })
     except Exception as e:
-        print(f"[WARN] Failed to load history for {session_id}: {e}")
+        print(f"[WARN] Failed to load history for {user_id}/{session_id}: {e}")
 
     try:
         while True:
@@ -372,6 +497,21 @@ async def ws_chat(websocket: WebSocket, session_id: str):
                 user_text = data.get("content", "").strip()
                 if not user_text:
                     continue
+
+                # 如果是该会话的首轮对话，用首句做会话标题（<=20字）
+                try:
+                    pre_state = await loop.run_in_executor(
+                        _executor, _sync_get_state, _app_workflow, config
+                    )
+                    is_first_turn = not (pre_state and pre_state.values and pre_state.values.get("messages"))
+                except Exception:
+                    is_first_turn = False
+
+                if is_first_turn:
+                    auto_title = user_text.strip().splitlines()[0][:20] or "新对话"
+                    user_store.update_session_meta(user_id, session_id, title=auto_title)
+                else:
+                    user_store.touch_session(user_id, session_id)
 
                 try:
                     # 流式处理
@@ -448,10 +588,10 @@ async def ws_chat(websocket: WebSocket, session_id: str):
                     })
 
     except WebSocketDisconnect:
-        print(f"[DISCONNECT] session={session_id}")
+        print(f"[DISCONNECT] user={user_id} session={session_id}")
     except Exception as e:
         traceback.print_exc()
-        print(f"[ERROR] WebSocket error session={session_id}: {e}")
+        print(f"[ERROR] WebSocket error user={user_id} session={session_id}: {e}")
 
 
 # ── 本地启动入口 ────────────────────────────────────────────

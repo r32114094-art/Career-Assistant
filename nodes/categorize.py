@@ -12,7 +12,9 @@ import re
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.runnables import RunnableConfig
 
+import user_store
 from config import llm
 from state import State, RoutingDecision, get_latest_user_text
 
@@ -105,10 +107,11 @@ def _retry_or_fallback(user_text: str, attempt: int, error_reason: str) -> Routi
 
 # ── 节点函数 ───────────────────────────────────────────────────────────────────
 
-def categorize(state: State) -> dict:
+def categorize(state: State, config: RunnableConfig) -> dict:
     """将用户查询主分类，输出结构化 RoutingDecision。
 
     双写兼容：同时更新 routing_decision（新）和 category（过渡期保留）。
+    进入节点时若 state.user_profile 为空，则从 user_store 加载跨会话画像。
     """
     user_text = get_latest_user_text(state)
 
@@ -123,11 +126,22 @@ def categorize(state: State) -> dict:
     raw = (_CATEGORIZE_PROMPT | llm).invoke({"query": user_text, "context": recent_context}).content
     decision = _parse_routing_decision(raw, user_text)
 
-    return {
+    update = {
         "routing_decision": decision,
         "category": decision["main_intent"],  # 双写过渡
         "clarify_count": state.get("clarify_count", 0) if decision["needs_clarification"] is False else state.get("clarify_count", 0),
     }
+
+    # 跨会话画像加载：首次进入该会话时注入用户画像
+    if not state.get("user_profile"):
+        user_id = (config or {}).get("configurable", {}).get("user_id") or ""
+        if user_id:
+            persisted_profile = user_store.get_profile(user_id)
+            if persisted_profile:
+                print(f"[Profile] 从 user_store 加载用户 {user_id} 的画像")
+                update["user_profile"] = persisted_profile
+
+    return update
 
 
 def handle_learning_resource(state: State) -> dict:
